@@ -7,7 +7,7 @@ const Detail = () => {
     const [anime, setAnime] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://13.236.195.93:8080/anime/${id}`)
+        axios.get(`https://nyan.exoream.my.id/anime/${id}`)
             .then((res) => {
                 setAnime(res.data.data);
             })

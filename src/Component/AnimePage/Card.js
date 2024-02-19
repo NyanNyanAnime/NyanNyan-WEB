@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import catimg from './Image/cat.png';
 import catimg2 from './Image/cat2.png';
 import Logo1 from './Image/Logo.png';
 
@@ -11,7 +10,7 @@ const Card = () => {
     const [filteredData, setFilteredData] = useState(null);
 
     useEffect(() => {
-        axios.get('http://13.236.195.93:8080/anime')
+        axios.get('https://nyan.exoream.my.id/anime')
             .then((res) => {
                 setData([...res.data.data]);
             })
