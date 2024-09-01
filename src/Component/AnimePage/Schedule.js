@@ -14,7 +14,7 @@ const Schedule = () => {
         const fetchAnimeData = async () => {
             setLoading(true);
             try {
-                const currentDays = days.slice(currentDayIndex, currentDayIndex + 3);
+                const currentDays = days.slice(currentDayIndex, currentDayIndex + 2);
                 const promises = currentDays.map(day =>
                     axios.get(`https://anime.exoream.my.id/anime/schedule?scheduled_day=${day}&page=1`)
                 );
@@ -34,14 +34,14 @@ const Schedule = () => {
     const truncateText = (text, maxLength) => text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
 
     const handleNext = () => {
-        if (currentDayIndex < days.length - 3) {
-            setCurrentDayIndex(currentDayIndex + 3);
+        if (currentDayIndex < days.length - 2) {
+            setCurrentDayIndex(currentDayIndex + 2);
         }
     };
 
     const handlePrev = () => {
         if (currentDayIndex > 0) {
-            setCurrentDayIndex(currentDayIndex - 3);
+            setCurrentDayIndex(currentDayIndex - 2);
         }
     };
 
@@ -74,8 +74,8 @@ const Schedule = () => {
                         </span>
                         <button
                             onClick={handleNext}
-                            disabled={currentDayIndex >= days.length - 3}
-                            className={`font-semibold p-2 rounded-md ${currentDayIndex >= days.length - 3 ? 'bg-gray-400 cursor-not-allowed' : 'bgColorSecond'}`}
+                            disabled={currentDayIndex >= days.length - 2}
+                            className={`font-semibold p-2 rounded-md ${currentDayIndex >= days.length - 2 ? 'bg-gray-400 cursor-not-allowed' : 'bgColorSecond'}`}
                         >
                             <svg
                                 className='w-6 h-6'
@@ -88,12 +88,12 @@ const Schedule = () => {
                             </svg>
                         </button>
                     </div>
-                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-10'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
                         {animeData.map((dayData, index) => (
                             <div key={index} className='relative'>
                                 {days[currentDayIndex + index] && (
                                     <h2 className='font-semibold text-2xl dark:text-white capitalize mb-4'>
-                                        {days[currentDayIndex + index].slice(0, 3)}
+                                        {days[currentDayIndex + index].slice(0, 2)}
                                     </h2>
                                 )}
                                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-2 sm:mr-10'>

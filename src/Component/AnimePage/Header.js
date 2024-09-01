@@ -141,7 +141,7 @@ const Header = () => {
                     <FontAwesomeIcon icon={faSearch} className="textColorSecond h-6" />
                 </button>
 
-                <form onSubmit={handleSearch}>
+                <form onSubmit={handleSearch} className='hidden sm:block'>
                     <div className="relative">
                         <input
                             type="search"

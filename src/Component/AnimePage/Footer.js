@@ -37,7 +37,7 @@ const Footer = () => {
                                 <span className="sr-only">Facebook page</span>
                             </a>
                             <a
-                                href="#"
+                                href="https://discord.gg/MhrCdae2"
                                 className="text-yellow-500 duration-300 hover:scale-150 ms-5"
                             >
                                 <svg
@@ -71,7 +71,7 @@ const Footer = () => {
                                 <span className="sr-only">Twitter page</span>
                             </a>
                             <a
-                                href="#"
+                                href="https://github.com/NyanNyanAnime"
                                 className="text-yellow-500 duration-300 hover:scale-150 ms-5"
                             >
                                 <svg

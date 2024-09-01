@@ -11,7 +11,7 @@ const MoreAnime = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPrevPage, setHasPrevPage] = useState(false);
-    const [orderBy, setOrderBy] = useState('popular');
+    const [orderBy, setOrderBy] = useState('updated');
 
     const queryParams = new URLSearchParams(search);
     const data = queryParams.get('data') || 'ongoingAnime';
@@ -20,13 +20,13 @@ const MoreAnime = () => {
         if (pathname.includes('/genre/')) {
             return `https://anime.exoream.my.id/anime/properties/genre/${type}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/country/')) {
-            return `https://anime.exoream.my.id/anime/properties/country/${type}?order_by=${orderBy}&page=${currentPage}`;
+            return `https://anime.exoream.my.id/anime/properties/country/${type.toLowerCase()}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/studio/')) {
             return `https://anime.exoream.my.id/anime/properties/studio/${type}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/season/')) {
             return `https://anime.exoream.my.id/anime/properties/season/${type}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/type/')) {
-            return `https://anime.exoream.my.id/anime/properties/type/${type}?order_by=${orderBy}&page=${currentPage}`;
+            return `https://anime.exoream.my.id/anime/properties/type/${type.toLowerCase()}?order_by=${orderBy}&page=${currentPage}`;
         } else {
             return `https://anime.exoream.my.id/anime/${type}?order_by=${orderBy}&page=${currentPage}`;
         }

@@ -183,7 +183,7 @@ const Home = () => {
         return (
             <div className='relative w-full bg-white shadow overflow-hidden'>
                 <img className='absolute inset-0 sm:h-[32rem] w-full object-cover' src={res.image} alt={res.title} />
-                <div className='absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent mix-blend-multiply'></div>
+                <div className='absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent mix-blend-multiply'></div>
                 <div className='relative flex top-1/2 left-0 px-8 sm:px-40 py-20 sm:py-8 transform -translate-y-1/2 leading-8 sm:leading-10 gap-20 items-center z-10'>
                     <img className='hidden sm:block h-[32rem] rounded-lg object-cover m-10 transform rotate-12 shadow-lg shadow-yellow-300' src={res.image} alt={res.title} />
                     <div className='text-white'>
