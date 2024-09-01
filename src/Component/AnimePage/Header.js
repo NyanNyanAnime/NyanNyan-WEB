@@ -110,27 +110,29 @@ const Header = () => {
                 </ul>
             </div >
 
-            <div className="flex items-center space-x-2">
-                <FontAwesomeIcon
-                    icon={faSun}
-                    className="text-white hidden sm:block"
-                />
-
-                <label className="relative inline-flex items-center cursor-pointer hidden sm:block">
-                    <input
-                        type="checkbox"
-                        className="sr-only"
-                        checked={darkMode}
-                        onChange={toggleDarkMode}
+            <div className="flex gap-4 items-center space-x-2">
+                <div className='flex items-center gap-2'>
+                    <FontAwesomeIcon
+                        icon={faSun}
+                        className="text-white hidden sm:block"
                     />
-                    <div className="w-11 h-6 bg-gray-600 hover:bg-yellow-500 rounded-full duration-300"></div>
-                    <span className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 dark:translate-x-5 translate-x-0`}></span>
-                </label>
 
-                <FontAwesomeIcon
-                    icon={faMoon}
-                    className="text-white hidden sm:block"
-                />
+                    <label className="relative inline-flex items-center cursor-pointer hidden sm:block">
+                        <input
+                            type="checkbox"
+                            className="sr-only"
+                            checked={darkMode}
+                            onChange={toggleDarkMode}
+                        />
+                        <div className="w-11 h-6 bg-gray-600 hover:bg-yellow-500 rounded-full duration-300"></div>
+                        <span className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 dark:translate-x-5 translate-x-0`}></span>
+                    </label>
+
+                    <FontAwesomeIcon
+                        icon={faMoon}
+                        className="text-white hidden sm:block"
+                    />
+                </div>
 
                 <button
                     className="block sm:hidden pr-4"
@@ -138,23 +140,23 @@ const Header = () => {
                 >
                     <FontAwesomeIcon icon={faSearch} className="textColorSecond h-6" />
                 </button>
-            </div>
 
-            <form onSubmit={handleSearch} className="hidden sm:flex items-center space-x-2">
-                <div className="relative">
-                    <input
-                        type="search"
-                        id="title-search"
-                        className="block w-full p-2.5 text-sm bg-gray-600 rounded-lg border border-gray-600 focus:ring-yellow-500 focus:border-yellow-500 placeholder-gray-500 text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <FontAwesomeIcon icon={faSearch} className='text-white' />
+                <form onSubmit={handleSearch}>
+                    <div className="relative">
+                        <input
+                            type="search"
+                            id="title-search"
+                            className="block w-full p-2.5 text-sm bg-gray-600 rounded-lg border border-gray-600 focus:ring-yellow-500 focus:border-yellow-500 placeholder-gray-500 text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
+                            placeholder="Search..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <FontAwesomeIcon icon={faSearch} className='text-white' />
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
 
             {
                 showModal && (
