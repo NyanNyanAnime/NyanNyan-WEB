@@ -89,6 +89,16 @@ function App() {
           }
         />
         <Route
+          path="/more/source/:type"
+          element={
+            <>
+              <Navbar />
+              <MoreAnime />
+              <Footer />
+            </>
+          }
+        />
+        <Route
           path="/more/season/:type"
           element={
             <>

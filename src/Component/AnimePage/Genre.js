@@ -48,10 +48,11 @@ const Genre = () => {
                             <option value="studio">Studio</option>
                             <option value="type">Type</option>
                             <option value="country">Country</option>
+                            <option value="source">Adaptation</option>
                         </select>
                     </div>
                     <hr className='w-full h-1 bg-black dark:bg-white rounded-lg mb-8' />
-                    <div className='grid grid-cols-2 sm:grid-cols-8 gap-4'>
+                    <div className='grid grid-cols-2 sm:grid-cols-6 gap-4'>
                         {genreData.map((res) => (
                             <Link
                                 to={`/more/${category}/${res.propertiesId}?data=propertiesDetails`}
