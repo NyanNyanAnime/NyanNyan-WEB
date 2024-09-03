@@ -49,7 +49,7 @@ const Header = () => {
                             className="block sm:hidden pl-8 sm:pl-0 duration-300 hover:scale-125"
                             aria-current="page"
                         >
-                            <FontAwesomeIcon icon={faHome} className='h-6' />
+                            <FontAwesomeIcon icon={faHome} className='h-4' />
                         </Link>
                         <Link
                             to="/"
@@ -65,7 +65,7 @@ const Header = () => {
                             className="block sm:hidden pl-8 sm:pl-0 duration-300 hover:scale-125"
                             aria-current="page"
                         >
-                            <FontAwesomeIcon icon={faList} className='h-6' />
+                            <FontAwesomeIcon icon={faList} className='h-4' />
                         </Link>
                         <Link
                             to="/AnimeList"
@@ -81,7 +81,7 @@ const Header = () => {
                             className="block sm:hidden pl-8 sm:pl-0 duration-300 hover:scale-125"
                             aria-current="page"
                         >
-                            <FontAwesomeIcon icon={faTags} className='h-6' />
+                            <FontAwesomeIcon icon={faTags} className='h-4' />
                         </Link>
                         <Link
                             to="/Category"
@@ -97,7 +97,7 @@ const Header = () => {
                             className="block sm:hidden pl-8 sm:pl-0 duration-300 hover:scale-125"
                             aria-current="page"
                         >
-                            <FontAwesomeIcon icon={faCalendar} className='h-6' />
+                            <FontAwesomeIcon icon={faCalendar} className='h-4' />
                         </Link>
                         <Link
                             to="/Schedule"
@@ -106,6 +106,12 @@ const Header = () => {
                         >
                             Schedule
                         </Link>
+                    </li>
+                    <li
+                        className="block sm:hidden pl-8 sm:pl-0 duration-300 hover:scale-125"
+                        onClick={toggleDarkMode}
+                    >
+                        <FontAwesomeIcon icon={darkMode ? faMoon : faSun} className="h-4" />
                     </li>
                 </ul>
             </div >
@@ -138,7 +144,7 @@ const Header = () => {
                     className="block sm:hidden pr-4"
                     onClick={() => setShowModal(true)}
                 >
-                    <FontAwesomeIcon icon={faSearch} className="textColorSecond h-6" />
+                    <FontAwesomeIcon icon={faSearch} className="textColorSecond h-4" />
                 </button>
 
                 <form onSubmit={handleSearch} className='hidden sm:block'>

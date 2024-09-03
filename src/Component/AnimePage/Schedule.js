@@ -92,8 +92,8 @@ const Schedule = () => {
                         {animeData.map((dayData, index) => (
                             <div key={index} className='relative'>
                                 {days[currentDayIndex + index] && (
-                                    <h2 className='font-semibold text-2xl dark:text-white capitalize mb-4'>
-                                        {days[currentDayIndex + index].slice(0, 2)}
+                                    <h2 className='font-semibold text-xl dark:text-white capitalize mb-4'>
+                                        {days[currentDayIndex + index]}
                                     </h2>
                                 )}
                                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-2 sm:mr-10'>

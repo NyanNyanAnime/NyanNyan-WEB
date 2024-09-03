@@ -140,13 +140,13 @@ const Video = () => {
                     <h5 className='pt-4 font-semibold'>Synopsis :</h5>
                     <p>{animeData.synopsis}</p>
                 </div>
-                <div className='mt-10 shadow-md py-6 px-4'>
+                <div className='mt-10 shadow-md py-6 px-4 dark:bg-gray-900 rounded-lg sm:w-3/4'>
                     <h3 className='font-semibold mb-4 dark:text-white'>Download Link : </h3>
                     {episode?.downloadLinks?.map((downloadItem, index) => (
                         downloadItem.links?.length > 0 && (
                             <div key={index} className='mb-10'>
                                 <h3 className='mb-4 font-black dark:text-white'>{downloadItem.quality}</h3>
-                                <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
+                                <hr className='w-full h-1 bg-yellow-500 mb-6' />
                                 <div className="flex flex-wrap gap-2">
                                     {downloadItem.links.slice(0, 6).map((download, linkIndex) => (
                                         <Link
