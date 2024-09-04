@@ -40,7 +40,7 @@ const Home = () => {
                     axios.get('https://anime.exoream.my.id/anime/properties/genre/action?order_by=updated&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/properties/genre/comedy?order_by=updated&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/properties/genre/romance?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/country/cn?order_by=ascending&page=1')
+                    axios.get('https://anime.exoream.my.id/anime/properties/country/cn?order_by=updated&page=1')
                 ]);
 
                 setOngoingData(ongoingRes.data.ongoingAnime);
