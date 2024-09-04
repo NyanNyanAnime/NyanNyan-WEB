@@ -91,7 +91,7 @@ const Footer = () => {
                             </a>
                         </div>
                         <span className="text-sm text-gray-300 text-center">
-                            © 2024 NyanNyanAnime
+                            © 2024 Aninyan
                         </span>
                     </div>
                 </div>

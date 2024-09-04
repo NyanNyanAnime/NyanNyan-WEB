@@ -35,6 +35,13 @@ const MoreAnime = () => {
     };
 
     useEffect(() => {
+        if (pathname.includes('/country/') || pathname.includes('/type/')) {
+            setOrderBy('ascending');
+        }
+    }, [pathname]);
+
+
+    useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {

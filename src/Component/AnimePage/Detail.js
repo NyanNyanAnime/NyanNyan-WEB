@@ -168,7 +168,7 @@ const Detail = () => {
                                         <h3 className='mb-4 font-black dark:text-white'>{downloadItem.quality}</h3>
                                         <hr className='w-4/5 h-1 bg-yellow-500 mb-6' />
                                         <div className="flex flex-wrap gap-2">
-                                            {downloadItem.links.slice(0, 6).map((download, linkIndex) => (
+                                            {downloadItem.links.map((download, linkIndex) => (
                                                 <Link
                                                     key={linkIndex}
                                                     to={download.url}
