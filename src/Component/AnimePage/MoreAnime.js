@@ -36,7 +36,7 @@ const MoreAnime = () => {
 
     useEffect(() => {
         if (pathname.includes('/country/') || pathname.includes('/type/')) {
-            setOrderBy('ascending');
+            setOrderBy('latest');
         }
     }, [pathname]);
 
