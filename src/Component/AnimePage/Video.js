@@ -74,7 +74,7 @@ const Video = () => {
                     >
                         {videoList.length > 0 ? videoList.map((video, index) => (
                             <option key={index} value={video.url}>
-                                {video.size}
+                                {video.size.replace('kuramadrive', 'drive')}
                             </option>
                         )) : <option>No videos available</option>}
                     </select>
