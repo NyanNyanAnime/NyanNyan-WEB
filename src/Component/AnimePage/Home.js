@@ -176,7 +176,6 @@ const Home = () => {
         return text.replace(filterPattern, '').trim();
     }
 
-
     const renderPopularItem = (res) => {
         const details = animeDetails[res.animeCode] || {};
 
@@ -248,7 +247,7 @@ const Home = () => {
                 <div className='w-full mb-8'>
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
-                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Summer Anime</h3>
+                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Summer 2024</h3>
                             <Link to="/more/summer?data=summerAnime">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
