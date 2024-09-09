@@ -111,7 +111,9 @@ const Detail = () => {
                             </tr>
                             <tr>
                                 <th className="px-3 py-3">Studio</th>
-                                <td className="px-3 py-3">{animeData.studio}</td>
+                                <td className="px-3 py-3">
+                                    {animeData.studio && animeData.studio.length > 0 ? animeData.studio.join(" ") : "?"}
+                                </td>
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700 rounded-lgs">
                                 <th className="px-3 py-3">Rating</th>
