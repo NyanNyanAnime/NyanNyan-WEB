@@ -12,7 +12,7 @@ const Home = () => {
     const [movieData, setMovieData] = useState([]);
     const [popularData, setPopularData] = useState([]);
     const [finishedData, setFinishedData] = useState([]);
-    const [summerData, setSummerData] = useState({});
+    const [seasonData, setSeasonData] = useState({});
     const [animeDetails, setAnimeDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [detailsLoading, setDetailsLoading] = useState(true);
@@ -31,12 +31,12 @@ const Home = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const [ongoingRes, popularRes, movieRes, finishedRes, summerRes, actionRes, comedyRes, romanceRes, chinaRes] = await Promise.all([
+                const [ongoingRes, popularRes, movieRes, finishedRes, seasonRes, actionRes, comedyRes, romanceRes, chinaRes] = await Promise.all([
                     axios.get('https://anime.exoream.my.id/anime/ongoing?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/summer?order_by=popular&page=1'),
+                    axios.get('https://anime.exoream.my.id/anime/properties/season/fall-2024?order_by=popular&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/movie?order_by=updated&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/finished?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/summer?order_by=updated&page=1'),
+                    axios.get('https://anime.exoream.my.id/anime/properties/season/fall-2024?order_by=updated&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/properties/genre/action?order_by=updated&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/properties/genre/comedy?order_by=updated&page=1'),
                     axios.get('https://anime.exoream.my.id/anime/properties/genre/romance?order_by=updated&page=1'),
@@ -44,16 +44,16 @@ const Home = () => {
                 ]);
 
                 setOngoingData(ongoingRes.data.ongoingAnime);
-                setPopularData(popularRes.data.summerAnime);
+                setPopularData(popularRes.data.propertiesDetails);
                 setMovieData(movieRes.data.movieAnime);
-                setSummerData(summerRes.data.summerAnime);
+                setSeasonData(seasonRes.data.propertiesDetails);
                 setFinishedData(finishedRes.data.finishedAnime);
                 setActionData(actionRes.data.propertiesDetails);
                 setComedyData(comedyRes.data.propertiesDetails);
                 setRomanceData(romanceRes.data.propertiesDetails);
                 setChinaData(chinaRes.data.propertiesDetails);
 
-                const topThreeData = popularRes.data.summerAnime.slice(0, 6);
+                const topThreeData = popularRes.data.propertiesDetails.slice(0, 6);
                 const requests = topThreeData.map((anime) => {
                     const { animeCode, animeId } = anime;
                     return axios.get(`https://anime.exoream.my.id/anime/${animeCode}/${animeId}`)
@@ -105,7 +105,7 @@ const Home = () => {
         </Link>
     );
 
-    const renderSummerItem = (res) => (
+    const renderSeasonItem = (res) => (
         <Link to={`/anime/${res.animeCode}/${res.animeId}`} key={res.animeId} className='flex-none w-full sm:w-1/5 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
@@ -247,17 +247,17 @@ const Home = () => {
                 <div className='w-full mb-8'>
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
-                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Summer 2024</h3>
-                            <Link to="/more/summer?data=summerAnime">
+                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Fall 2024</h3>
+                            <Link to="/more/season/fall-2024?data=propertiesDetails">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
                     </div>
 
                     <Slider
-                        data={summerData}
+                        data={seasonData}
                         itemsPerPage={itemsPerPage}
-                        renderItem={renderSummerItem}
+                        renderItem={renderSeasonItem}
                     />
                 </div>
 
