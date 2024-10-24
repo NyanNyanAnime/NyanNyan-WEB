@@ -16,7 +16,7 @@ const Schedule = () => {
             try {
                 const currentDays = days.slice(currentDayIndex, currentDayIndex + 2);
                 const promises = currentDays.map(day =>
-                    axios.get(`https://anime.exoream.my.id/anime/schedule?scheduled_day=${day}&page=1`)
+                    axios.get(`https://api.aninyan.com/anime/schedule?scheduled_day=${day}&page=1`)
                 );
                 const responses = await Promise.all(promises);
                 const fetchedData = responses.map(res => res.data.scheduleAnime);

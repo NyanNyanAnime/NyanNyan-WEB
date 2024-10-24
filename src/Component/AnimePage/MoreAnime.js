@@ -18,26 +18,26 @@ const MoreAnime = () => {
 
     const getApiUrl = () => {
         if (pathname.includes('/genre/')) {
-            return `https://anime.exoream.my.id/anime/properties/genre/${type}?order_by=${orderBy}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/properties/genre/${type}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/country/')) {
-            return `https://anime.exoream.my.id/anime/properties/country/${type.toLowerCase()}?name=${type}&order_by=${orderBy}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/properties/country/${type.toLowerCase()}?name=${type}&order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/studio/')) {
-            return `https://anime.exoream.my.id/anime/properties/studio/${type}?order_by=${orderBy}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/properties/studio/${type}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/season/')) {
-            return `https://anime.exoream.my.id/anime/properties/season/${type}?order_by=${orderBy}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/properties/season/${type}?order_by=${orderBy}&page=${currentPage}`;
         } else if (pathname.includes('/type/')) {
-            return `https://anime.exoream.my.id/anime/properties/type/${type.toLowerCase()}?order_by=${orderBy}&name=${type}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/properties/type/${type.toLowerCase()}?order_by=${orderBy}&name=${type}&page=${currentPage}`;
         } else if (pathname.includes('/source/')) {
-            return `https://anime.exoream.my.id/anime/properties/source/${type.toLowerCase().replace(/ /g, "-")}?order_by=${orderBy}&name=${type}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/properties/source/${type.toLowerCase().replace(/ /g, "-")}?order_by=${orderBy}&name=${type}&page=${currentPage}`;
         } else {
-            return `https://anime.exoream.my.id/anime/${type}?order_by=${orderBy}&page=${currentPage}`;
+            return `https://api.aninyan.com/anime/${type}?order_by=${orderBy}&page=${currentPage}`;
         }
     };
 
     useEffect(() => {
         if (pathname.includes('/country/') || pathname.includes('/type/')) {
             setOrderBy('latest');
-        }
+        } 
     }, [pathname]);
 
 
@@ -94,7 +94,7 @@ const MoreAnime = () => {
             <div className='flex flex-col mx-auto pb-20 pt-10 sm:px-40 gap-10'>
                 <div className='bgColorPrimary3 dark:bg-gray-800 p-8 rounded-xl shadow-lg w-full mb-8'>
                     <div className='flex flex-row items-center justify-between mb-2'>
-                        <span className='font-black dark:text-white sm:text-2xl capitalize'>{type} Anime</span>
+                        <span className='font-black dark:text-white sm:text-2xl capitalize'>{type.replace('-', ' ')} Anime</span>
                         <select
                             value={orderBy}
                             onChange={handleOrderChange}

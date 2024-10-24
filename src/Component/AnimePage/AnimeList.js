@@ -14,7 +14,7 @@ const AnimeList = () => {
         const fetchAnimeData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://anime.exoream.my.id/anime/list?page=${currentPage}`);
+                const res = await axios.get(`https://api.aninyan.com/anime/list?page=${currentPage}`);
                 setAnimeData(res.data.listAnime);
                 setHasNextPage(res.data.nextPage);
                 setHasPrevPage(res.data.prevPage);

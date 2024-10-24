@@ -15,7 +15,7 @@ const Detail = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://anime.exoream.my.id/anime/${animeCode}/${animeId}`);
+                const res = await axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}`);
                 setAnimeData(res.data.animeDetails);
                 setBatchId(res.data.animeDetails.batchId);
             } catch (error) {
@@ -33,7 +33,7 @@ const Detail = () => {
             if (batchId && batchId !== "?") {
                 setLoading(true);
                 try {
-                    const res = await axios.get(`https://anime.exoream.my.id/anime/${animeCode}/${animeId}/batch/${batchId}`);
+                    const res = await axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}/batch/${batchId}`);
                     setBatch(res.data);
                 } catch (error) {
                     console.error('Error fetching batch data:', error);

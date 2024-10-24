@@ -21,11 +21,11 @@ const Video = () => {
             setLoading(true);
 
             try {
-                const episodeRes = await axios.get(`https://anime.exoream.my.id/anime/${animeCode}/${animeId}/${episodeNumber}`);
+                const episodeRes = await axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}/${episodeNumber}`);
                 setEpisode(episodeRes.data);
                 setVideoList(episodeRes.data.videoList);
 
-                const animeRes = await axios.get(`https://anime.exoream.my.id/anime/${animeCode}/${animeId}`);
+                const animeRes = await axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}`);
                 setAnimeData(animeRes.data.animeDetails);
                 setSelectedVideo(episodeRes.data.videoList[0]);
             } catch (err) {

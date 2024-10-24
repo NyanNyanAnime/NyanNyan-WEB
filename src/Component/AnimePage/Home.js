@@ -19,7 +19,7 @@ const Home = () => {
     const [actionData, setActionData] = useState({});
     const [comedyData, setComedyData] = useState({});
     const [romanceData, setRomanceData] = useState({});
-    const [chinaData, setChinaData] = useState({});
+    const [trendingAnime, setTrendingAnime] = useState({});
     const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
     const isTablet = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -31,16 +31,16 @@ const Home = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const [ongoingRes, popularRes, movieRes, finishedRes, seasonRes, actionRes, comedyRes, romanceRes, chinaRes] = await Promise.all([
-                    axios.get('https://anime.exoream.my.id/anime/ongoing?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/season/fall-2024?order_by=popular&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/movie?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/finished?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/season/fall-2024?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/genre/action?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/genre/comedy?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/genre/romance?order_by=updated&page=1'),
-                    axios.get('https://anime.exoream.my.id/anime/properties/country/cn?order_by=latest&page=1')
+                const [ongoingRes, popularRes, movieRes, finishedRes, seasonRes, actionRes, comedyRes, romanceRes, trendingAnimeRes] = await Promise.all([
+                    axios.get('https://api.aninyan.com/anime/ongoing?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/properties/season/fall-2024?order_by=popular&page=1'),
+                    axios.get('https://api.aninyan.com/anime/movie?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/finished?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/properties/season/fall-2024?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/properties/genre/action?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/properties/genre/comedy?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/properties/genre/romance?order_by=updated&page=1'),
+                    axios.get('https://api.aninyan.com/anime/properties/season/fall-2024?order_by=most_viewed&page=1')
                 ]);
 
                 setOngoingData(ongoingRes.data.ongoingAnime);
@@ -51,12 +51,12 @@ const Home = () => {
                 setActionData(actionRes.data.propertiesDetails);
                 setComedyData(comedyRes.data.propertiesDetails);
                 setRomanceData(romanceRes.data.propertiesDetails);
-                setChinaData(chinaRes.data.propertiesDetails);
+                setTrendingAnime(trendingAnimeRes.data.propertiesDetails);
 
                 const topThreeData = popularRes.data.propertiesDetails.slice(0, 6);
                 const requests = topThreeData.map((anime) => {
                     const { animeCode, animeId } = anime;
-                    return axios.get(`https://anime.exoream.my.id/anime/${animeCode}/${animeId}`)
+                    return axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}`)
                         .then((response) => ({
                             animeCode,
                             details: response.data.animeDetails,
@@ -160,7 +160,7 @@ const Home = () => {
         </Link>
     );
 
-    const renderChinaItem = (res) => (
+    const renderTrendingAnime = (res) => (
         <Link to={`/anime/${res.animeCode}/${res.animeId}`} key={res.animeId} className='flex-none w-full sm:w-1/4 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
@@ -332,17 +332,17 @@ const Home = () => {
                 <div className='w-full mb-8'>
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
-                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>China Anime</h3>
-                            <Link to="/more/country/cn?data=propertiesDetails">
+                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Trending Anime</h3>
+                            <Link to="/more/season/fall-2024?data=propertiesDetails">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
                         <span className='text-white'></span>
                     </div>
                     <Slider
-                        data={chinaData}
+                        data={trendingAnime}
                         itemsPerPage={itemsPerPage}
-                        renderItem={renderChinaItem}
+                        renderItem={renderTrendingAnime}
                     />
                 </div>
 

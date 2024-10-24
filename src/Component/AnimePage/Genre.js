@@ -12,7 +12,7 @@ const Genre = () => {
         const fetchGenres = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://anime.exoream.my.id/anime/properties/${category}`);
+                const res = await axios.get(`https://api.aninyan.com/anime/properties/${category}`);
                 setGenreData(res.data.propertiesAnime);
             } catch (error) {
                 console.error('Error fetching genres:', error);
