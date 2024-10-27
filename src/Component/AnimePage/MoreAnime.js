@@ -15,6 +15,7 @@ const MoreAnime = () => {
 
     const queryParams = new URLSearchParams(search);
     const data = queryParams.get('data') || 'ongoingAnime';
+    const trendingParam = queryParams.get('trending');
 
     const getApiUrl = () => {
         if (pathname.includes('/genre/')) {
@@ -35,10 +36,14 @@ const MoreAnime = () => {
     };
 
     useEffect(() => {
-        if (pathname.includes('/country/') || pathname.includes('/type/')) {
+        if (trendingParam === 'true') {
+            setOrderBy('most_viewed');
+        } else if (pathname.includes('/country/') || pathname.includes('/type/')) {
             setOrderBy('latest');
-        } 
-    }, [pathname]);
+        } else {
+            setOrderBy('updated');
+        }
+    }, [pathname, trendingParam]);
 
 
     useEffect(() => {
