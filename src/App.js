@@ -29,7 +29,7 @@ function App() {
           }
         />
         <Route
-          path="/AnimeList"
+          path="/anime/list"
           element={
             <>
               <Navbar />
@@ -39,7 +39,7 @@ function App() {
           }
         />
         <Route
-          path="/Category"
+          path="/anime/genres"
           element={
             <>
               <Navbar />
@@ -49,7 +49,7 @@ function App() {
           }
         />
         <Route
-          path="/Schedule"
+          path="/anime/schedule"
           element={
             <>
               <Navbar />
@@ -59,7 +59,7 @@ function App() {
           }
         />
         <Route
-          path="/more/:type"
+          path="/anime/ongoing"
           element={
             <>
               <Navbar />
@@ -69,67 +69,7 @@ function App() {
           }
         />
         <Route
-          path="/more/genre/:type"
-          element={
-            <>
-              <Navbar />
-              <MoreAnime />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/more/country/:type"
-          element={
-            <>
-              <Navbar />
-              <MoreAnime />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/more/source/:type"
-          element={
-            <>
-              <Navbar />
-              <MoreAnime />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/more/season/:type"
-          element={
-            <>
-              <Navbar />
-              <MoreAnime />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/more/type/:type"
-          element={
-            <>
-              <Navbar />
-              <MoreAnime />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/more/studio/:type"
-          element={
-            <>
-              <Navbar />
-              <MoreAnime />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/search"
+          path="/anime/search"
           element={
             <>
               <Navbar />
@@ -139,7 +79,37 @@ function App() {
           }
         />
         <Route
-          path="/anime/:animeCode/:animeId"
+          path="/anime/genres/:genre"
+          element={
+            <>
+              <Navbar />
+              <MoreAnime />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/anime/ongoing"
+          element={
+            <>
+              <Navbar />
+              <MoreAnime />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/anime/completed"
+          element={
+            <>
+              <Navbar />
+              <MoreAnime />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/anime/details/:anime_id"
           element={
             <>
               <Navbar />
@@ -149,7 +119,7 @@ function App() {
           }
         />
         <Route
-          path="/anime/:animeCode/:animeId/:episodeNumber"
+          path="/anime/episode/:anime_id/"
           element={
             <>
               <Navbar />

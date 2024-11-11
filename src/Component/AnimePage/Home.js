@@ -171,7 +171,7 @@ const Home = () => {
                             <div className='font-black dark:text-white sm:text-2xl w-1/2'>
                                 <h3>Ongoing Anime</h3>
                             </div>
-                            <Link to="/anime/ongoing/1">
+                            <Link to="/anime/ongoing">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>
                                     View More
                                 </button>
@@ -191,7 +191,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Action Anime</h3>
-                            <Link to="/anime/genres/action/1">
+                            <Link to="/anime/genres/action">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -208,7 +208,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Comedy Anime</h3>
-                            <Link to="/anime/genres/comedy/1">
+                            <Link to="/anime/genres/comedy">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -225,7 +225,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Romance Anime</h3>
-                            <Link to="/anime/genres/romance/1">
+                            <Link to="/anime/genres/romance">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -242,7 +242,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Finished Anime</h3>
-                            <Link to="/anime/finished/1">
+                            <Link to="/anime/finished">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>

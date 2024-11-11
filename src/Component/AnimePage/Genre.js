@@ -38,7 +38,7 @@ const Genre = () => {
                     <div className='grid grid-cols-2 sm:grid-cols-6 gap-4'>
                         {genreData.map((res) => (
                             <Link
-                                to={`/anime/genres/${res.genre_id}/1`}
+                                to={`/anime/genres/${res.genre_id}`}
                                 className='bgColorSecond text-xs sm:text-sm font-semibold p-4 rounded-lg hover:bg-yellow-600'
                             >
                                 {res.genre}
