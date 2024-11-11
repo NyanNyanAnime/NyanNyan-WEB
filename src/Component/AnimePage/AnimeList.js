@@ -8,13 +8,11 @@ const AnimeList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchAnimeData = async () => {
+        const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://api.aninyan.com/anime/list`);
-                setAnimeData(res.data.data || []);
-                setHasNextPage(res.data.nextPage);
-                setHasPrevPage(res.data.prevPage);
+                const res = await axios.get('https://api.aninyan.com/anime/list');
+                setAnimeData(res.data.data);
             } catch (error) {
                 console.error('Error fetching anime data:', error);
             } finally {
@@ -22,8 +20,8 @@ const AnimeList = () => {
             }
         };
 
-        fetchAnimeData();
-    }, [currentPage]);
+        fetchData();
+    }, []);
 
     const groupDataByAlphabet = (data) => {
         if (!Array.isArray(data)) return {};

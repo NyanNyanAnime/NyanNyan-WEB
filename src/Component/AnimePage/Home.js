@@ -171,7 +171,7 @@ const Home = () => {
                             <div className='font-black dark:text-white sm:text-2xl w-1/2'>
                                 <h3>Ongoing Anime</h3>
                             </div>
-                            <Link to="/more/ongoing?data=ongoingAnime">
+                            <Link to="/anime/ongoing/1">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>
                                     View More
                                 </button>
@@ -191,7 +191,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Action Anime</h3>
-                            <Link to="/more/genre/action?data=propertiesDetails">
+                            <Link to="/anime/genres/action/1">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -208,7 +208,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Comedy Anime</h3>
-                            <Link to="/more/genre/comedy?data=propertiesDetails">
+                            <Link to="/anime/genres/comedy/1">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -225,7 +225,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Romance Anime</h3>
-                            <Link to="/more/genre/romance?data=propertiesDetails">
+                            <Link to="/anime/genres/romance/1">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -242,7 +242,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Finished Anime</h3>
-                            <Link to="/more/finished?data=finishedAnime">
+                            <Link to="/anime/finished/1">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -255,11 +255,11 @@ const Home = () => {
                     />
                 </div>
 
-                <div className='w-full mb-8'>
+                {/* <div className='w-full mb-8'>
                     <div className='mb-8 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-5'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Movies Anime</h3>
-                            <Link to="/more/movie?data=movieAnime">
+                            <Link to="/">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
@@ -279,7 +279,7 @@ const Home = () => {
                             </Link>
                         ))}
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className='flex flex-row justify-center items-center w-full'>
                 <img src={Nyan} alt='Nyan' className='w-40 sm:w-96 mx-auto' />

@@ -37,10 +37,10 @@ const Slider = ({ data, itemsPerPage, renderItem, onNext, onPrev, autoPlayInterv
     const handleTouchMove = (e) => {
         if (!touching) return;
         const deltaX = e.touches[0].clientX - startXRef.current;
-        if (deltaX < -50) { // Swipe left
+        if (deltaX < -50) {
             nextSlide();
             setTouching(false);
-        } else if (deltaX > 50) { // Swipe right
+        } else if (deltaX > 50) {
             prevSlide();
             setTouching(false);
         }
@@ -58,10 +58,10 @@ const Slider = ({ data, itemsPerPage, renderItem, onNext, onPrev, autoPlayInterv
     const handleMouseMove = (e) => {
         if (!touching) return;
         const deltaX = e.clientX - startXRef.current;
-        if (deltaX < -50) { // Swipe left
+        if (deltaX < -50) {
             nextSlide();
             setTouching(false);
-        } else if (deltaX > 50) { // Swipe right
+        } else if (deltaX > 50) {
             prevSlide();
             setTouching(false);
         }
@@ -81,7 +81,7 @@ const Slider = ({ data, itemsPerPage, renderItem, onNext, onPrev, autoPlayInterv
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp} // Ensure to handle mouse leaving the area
+            onMouseLeave={handleMouseUp}
         >
             <div className='overflow-hidden'>
                 <div

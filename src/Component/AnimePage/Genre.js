@@ -6,14 +6,13 @@ import Loading from './Loading';
 const Genre = () => {
     const [genreData, setGenreData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [category, setCategory] = useState('genre');
 
     useEffect(() => {
-        const fetchGenres = async () => {
+        const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://api.aninyan.com/anime/properties/${category}`);
-                setGenreData(res.data.propertiesAnime);
+                const res = await axios.get(`https://api.aninyan.com/anime/genres`);
+                setGenreData(res.data.data);
             } catch (error) {
                 console.error('Error fetching genres:', error);
             } finally {
@@ -21,12 +20,8 @@ const Genre = () => {
             }
         };
 
-        fetchGenres();
-    }, [category]);
-
-    const handleCategoryChange = (event) => {
-        setCategory(event.target.value);
-    };
+        fetchData();
+    }, []);
 
     if (loading) {
         return <Loading />;
@@ -38,27 +33,15 @@ const Genre = () => {
                 <div className='bgColorPrimary3 dark:bg-gray-800 p-8 rounded-xl shadow-lg w-full mb-8'>
                     <div className='flex flex-row items-center justify-between mb-2'>
                         <span className='font-black dark:text-white sm:text-2xl capitalize'>Anime Category</span>
-                        <select
-                            value={category}
-                            onChange={handleCategoryChange}
-                            className='font-semibold rounded-md p-2 bgColorSecond text-xs sm:text-md'
-                        >
-                            <option value="genre">Genre</option>
-                            <option value="season">Season</option>
-                            <option value="studio">Studio</option>
-                            <option value="type">Type</option>
-                            <option value="country">Country</option>
-                            <option value="source">Adaptation</option>
-                        </select>
                     </div>
                     <hr className='w-full h-1 bg-black dark:bg-white rounded-lg mb-8' />
                     <div className='grid grid-cols-2 sm:grid-cols-6 gap-4'>
                         {genreData.map((res) => (
                             <Link
-                                to={`/more/${category}/${res.propertiesId}?data=propertiesDetails`}
+                                to={`/anime/genres/${res.genre_id}/1`}
                                 className='bgColorSecond text-xs sm:text-sm font-semibold p-4 rounded-lg hover:bg-yellow-600'
                             >
-                                {res.name}
+                                {res.genre}
                             </Link>
                         ))}
                     </div>
