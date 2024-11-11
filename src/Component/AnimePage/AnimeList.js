@@ -12,7 +12,9 @@ const AnimeList = () => {
             setLoading(true);
             try {
                 const res = await axios.get(`https://api.aninyan.com/anime/list`);
-                setAnimeData(res.data.data);
+                setAnimeData(res.data.data || []);
+                setHasNextPage(res.data.nextPage);
+                setHasPrevPage(res.data.prevPage);
             } catch (error) {
                 console.error('Error fetching anime data:', error);
             } finally {
