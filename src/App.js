@@ -109,7 +109,7 @@ function App() {
           }
         />
         <Route
-          path="/anime/details/:anime_id"
+          path="/anime/details/:animeId"
           element={
             <>
               <Navbar />
@@ -119,7 +119,7 @@ function App() {
           }
         />
         <Route
-          path="/anime/episode/:anime_id/"
+          path="/anime/episode/:animeId"
           element={
             <>
               <Navbar />

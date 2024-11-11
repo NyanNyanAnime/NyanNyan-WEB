@@ -56,7 +56,7 @@ const AnimeList = () => {
                                 <ul className='mt-2'>
                                     {groupedData[letter].map((anime) => (
                                         <li key={anime.anime_id} className='mt-2'>
-                                            <Link to={`/anime/${anime.anime_id}`} className='text-yellow-500 hover:underline'>
+                                            <Link to={`/anime/details/${anime.anime_id}`} className='text-yellow-500 hover:underline'>
                                                 {anime.title}
                                             </Link>
                                         </li>

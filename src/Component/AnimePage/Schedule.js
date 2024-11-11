@@ -62,7 +62,7 @@ const Schedule = () => {
                     <div className='grid grid-cols-1 gap-2'>
                         {filteredData.map((anime) => (
                             <Link
-                                to={`/anime/${anime.anime_id}`}
+                                to={`/anime/details/${anime.anime_id}`}
                                 key={anime.anime_id}
                                 className='text-yellow-500 hover:underline'
                             >

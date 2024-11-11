@@ -33,7 +33,6 @@ const Home = () => {
                     axios.get('https://api.aninyan.com/anime/genres/romance/1')
                 ]);
 
-                // Menyimpan data anime ke state
                 setOngoingData(ongoingRes.data);
                 setFinishedData(finishedRes.data);
                 setActionData(actionRes.data);
@@ -74,7 +73,7 @@ const Home = () => {
     }
 
     const ongoingAnime = (res) => (
-        <Link to={`/anime/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
+        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.episode}</h3>
@@ -85,7 +84,7 @@ const Home = () => {
     );
 
     const finishedAnime = (res) => (
-        <Link to={`/anime/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/4 p-4'>
+        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/4 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.score}</h3>
@@ -95,7 +94,7 @@ const Home = () => {
     );
 
     const actionAnime = (res) => (
-        <Link to={`/anime/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
+        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.ratings}</h3>
@@ -105,7 +104,7 @@ const Home = () => {
     );
 
     const comedyAnime = (res) => (
-        <Link to={`/anime/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
+        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.ratings}</h3>
@@ -115,7 +114,7 @@ const Home = () => {
     );
 
     const romanceAnime = (res) => (
-        <Link to={`/anime/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
+        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.ratings}</h3>
@@ -135,7 +134,7 @@ const Home = () => {
                     <span className='sm:text-lg font-bold text-gray-400'>{res.score}</span><span className='text-white'> | </span>
                     {/* <span className='sm:text-lg font-bold text-gray-400'>{res.genres.join(', ')}</span><br /> */}
                     <p className='sm:text-lg'>{res.sinopsis}</p>
-                    <Link to={`/anime/${res.anime_id}`} key={res.anime_id} className='block mt-5'>
+                    <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='block mt-5'>
                         <button className='flex flex-row items-center bgColorSecond text-black rounded-lg px-4 py-2 font-semibold duration-300 hover:scale-125'>
                             <svg
                                 className='w-6 h-6'
