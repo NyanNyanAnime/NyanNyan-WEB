@@ -7,7 +7,7 @@ import '../../App.css';
 const Detail = () => {
     const { animeId } = useParams();
     const [animeData, setAnimeData] = useState([]);
-    const [batch, setBatch] = useState([]);
+    // const [batch, setBatch] = useState([]);
     const [episodeList, setEpisodeList] = useState([])
     const [loading, setLoading] = useState(true);
 
@@ -16,8 +16,10 @@ const Detail = () => {
             setLoading(true);
             try {
                 const res = await axios.get(`https://api.aninyan.com/anime/details/${animeId}`);
+                // const batchRes = await axios.get(`https://api.aninyan.com/anime/batch/${animeId}`);
                 setAnimeData(res.data.data);
-                setEpisodeList(res.data.episode_list)
+                setEpisodeList(res.data.episode_list);
+                // setBatch(batchRes.data.data);
             } catch (error) {
                 console.error('Error fetching anime details:', error);
             } finally {
@@ -27,22 +29,6 @@ const Detail = () => {
 
         fetchData();
     }, [animeId]);
-
-    // useEffect(() => {
-    //     const fetchBatchData = async () => {
-    //         setLoading(true);
-    //         try {
-    //             const res = await axios.get(`https://api.aninyan.com/anime/batch/${animeId}`);
-    //             setBatch(res.data);
-    //         } catch (error) {
-    //             console.error('Error fetching batch data:', error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchBatchData();
-    // }, [animeId]);
 
     if (loading) {
         return <Loading />;
@@ -157,28 +143,34 @@ const Detail = () => {
                         <h2 className="text-lg lg:text-xl mb-8">
                             <span className="inline-block bgColorSecond dark:text-gray-800 font-bold rounded-lg px-3 py-1">Download Batch :</span>
                         </h2>
-                        {batch?.downloadLinks?.map((downloadItem, index) => (
-                            downloadItem.links?.length > 0 && (
-                                <div key={index} className='mb-10 '>
-                                    <h3 className='mb-4 font-black dark:text-white'>{downloadItem.quality}</h3>
-                                    <hr className='w-4/5 h-1 bg-yellow-500 mb-6' />
-                                    <div className="flex flex-wrap gap-2">
-                                        {downloadItem.links.map((download, linkIndex) => (
-                                            <Link
-                                                key={linkIndex}
-                                                to={download.url}
-                                                target='_blank'
-                                                className="bg-yellow-100 text-lg px-4 py-2 mr-3 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
-                                            >
-                                                <button>
-                                                    {download.title}
-                                                </button>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            )
-                        ))}
+                        {batch && (
+                            <>
+                                {batch.download_links.map((downloadData, index) => {
+                                    const { quality, links } = downloadData;
+                                    return (
+                                        <div key={index} className="mb-10">
+                                            <h3 className="mb-4 font-black dark:text-white">{quality}</h3>
+                                            <hr className="w-full h-1 bg-yellow-500 mb-6" />
+                                            <div className="flex flex-wrap gap-2">
+                                                {links.map((linkObj, idx) => (
+                                                    <a
+                                                        key={idx}
+                                                        href={linkObj.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="bg-yellow-100 text-lg px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
+                                                    >
+                                                        <button>
+                                                            {linkObj.title}
+                                                        </button>
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </>
+                        )}
                     </div> */}
                 </div>
 

@@ -6,9 +6,6 @@ import Loading from './Loading';
 const SearchAnime = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [hasNextPage, setHasNextPage] = useState(false);
-    const [hasPrevPage, setHasPrevPage] = useState(false);
     const query = new URLSearchParams(useLocation().search).get('query');
 
     useEffect(() => {
@@ -16,10 +13,8 @@ const SearchAnime = () => {
             const fetchData = async () => {
                 setLoading(true);
                 try {
-                    const res = await axios.get(`https://api.aninyan.com/anime/search?page=${currentPage}&order_by=updated&query=${encodeURIComponent(query)}`);
-                    setSearchResults(res.data.searchResult);
-                    setHasNextPage(res.data.nextPage);
-                    setHasPrevPage(res.data.prevPage);
+                    const res = await axios.get(`https://api.aninyan.com/anime/search?query=${encodeURIComponent(query)}`);
+                    setSearchResults(res.data.data);
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 } finally {
@@ -28,23 +23,9 @@ const SearchAnime = () => {
             };
             fetchData();
         }
-    }, [query, currentPage]);
+    }, [query]);
 
     const truncateText = (text, maxLength) => text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-
-    const handlePrevPage = () => {
-        if (hasPrevPage) {
-            setCurrentPage((prev) => prev - 1);
-            window.scrollTo(0, 0);
-        }
-    };
-
-    const handleNextPage = () => {
-        if (hasNextPage) {
-            setCurrentPage((prev) => prev + 1);
-            window.scrollTo(0, 0);
-        }
-    };
 
     if (loading) {
         return <Loading />;
@@ -61,50 +42,27 @@ const SearchAnime = () => {
 
                     {searchResults.length > 0 ? (
                         <>
-                            <div className='grid grid-cols-1 sm:grid-cols-6 gap-4'>
+                            <div className='grid grid-cols-1 sm:grid-cols-4 gap-4'>
                                 {searchResults.map((res) => (
-                                    <Link to={`/anime/${res.animeCode}/${res.animeId}`} key={res.animeId}>
+                                    <Link to={`/anime/details/${res.animeId}`} key={res.animeId}>
                                         <div className='w-full relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                                             <img className='h-64 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
-                                            <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-blue-500/60 text-white rounded-md p-1'>{res.ratings}</h3>
+                                            <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.rating}</h3>
                                         </div>
-                                        <h1 className='text-md dark:text-white font-semibold pt-3'>{truncateText(res.title, 15)}</h1>
-                                        <h3 className='text-md rounded-sm text-gray-500 font-semibold'>{res.type.join(', ')}</h3>
+                                        <h1 className='text-md dark:text-white font-semibold pt-3'>{truncateText(res.title, 30)}</h1>
+                                        <div className='flex flex-wrap gap-2'>
+                                            {res.genres.map((genre, index) => (
+                                                <span
+                                                    key={index}
+                                                    className='my-1 px-2 text-sm font-semibold text-white bg-yellow-500 rounded-full'
+                                                >
+                                                    {genre}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <h3 className='text-md rounded-sm text-gray-500 font-semibold'>{res.status}</h3>
                                     </Link>
                                 ))}
-                            </div>
-
-                            <div className='flex justify-center mt-8 gap-4'>
-                                <button
-                                    onClick={handlePrevPage}
-                                    disabled={!hasPrevPage}
-                                    className={`p-2 rounded-full shadow-lg ${hasPrevPage ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-                                >
-                                    <svg
-                                        className='w-6 h-6'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        viewBox='0 0 24 24'
-                                        xmlns='http://www.w3.org/2000/svg'
-                                    >
-                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M15 19l-7-7 7-7'></path>
-                                    </svg>
-                                </button>
-                                <button
-                                    onClick={handleNextPage}
-                                    disabled={!hasNextPage}
-                                    className={`p-2 rounded-full shadow-lg ${hasNextPage ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-                                >
-                                    <svg
-                                        className='w-6 h-6'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        viewBox='0 0 24 24'
-                                        xmlns='http://www.w3.org/2000/svg'
-                                    >
-                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M9 5l7 7-7 7'></path>
-                                    </svg>
-                                </button>
                             </div>
                         </>
                     ) : (

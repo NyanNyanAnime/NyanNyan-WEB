@@ -26,7 +26,7 @@ const Header = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchQuery) {
-            navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+            navigate(`/anime/search?query=${encodeURIComponent(searchQuery)}`);
             setShowModal(false);
         }
     };
