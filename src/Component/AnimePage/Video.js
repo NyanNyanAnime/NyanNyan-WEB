@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import Loading from './Loading';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import VideoPlayer from './VideoPlayer';
+
 
 const Video = () => {
-    const { animeCode, animeId, episodeNumber } = useParams();
+    const location = useLocation();
+    const { animeId } = location.state || {};
+    const { episodeId } = useParams();
     const navigate = useNavigate();
-    const [episode, setEpisode] = useState(null);
+    const [episode, setEpisode] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
-    const [videoList, setVideoList] = useState([]);
-    const [animeData, setAnimeData] = useState({ episodeList: [] });
+    const [animeData, setAnimeData] = useState([]);
+    const [episodeList, setEpisodeList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -21,13 +25,21 @@ const Video = () => {
             setLoading(true);
 
             try {
-                const episodeRes = await axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}/${episodeNumber}`);
-                setEpisode(episodeRes.data);
-                setVideoList(episodeRes.data.videoList);
+                const episodeRes = await axios.get(`https://api.aninyan.com/anime/episode/${episodeId}`);
+                setEpisode(episodeRes.data.data);
 
-                const animeRes = await axios.get(`https://api.aninyan.com/anime/${animeCode}/${animeId}`);
-                setAnimeData(animeRes.data.animeDetails);
-                setSelectedVideo(episodeRes.data.videoList[0]);
+                const urlDetails = `https://api.aninyan.com/anime/details/${animeId}`
+                const animeRes = await axios.get(`https://api.aninyan.com/anime/details/${animeId}`);
+                setAnimeData(animeRes.data.data);
+                setEpisodeList(animeRes.data.episode_list);
+
+                console.log(urlDetails)
+                if (episodeRes) {
+                    const mirrorEmbed = episodeRes.data.data.mirror_embed2;
+                    if (mirrorEmbed.streaming.length > 0) {
+                        setSelectedVideo(mirrorEmbed.streaming[0].link);
+                    }
+                }
             } catch (err) {
                 console.error('Error fetching episode details:', err);
             } finally {
@@ -36,20 +48,20 @@ const Video = () => {
         };
 
         fetchData();
-    }, [animeCode, animeId, episodeNumber]);
+    }, [animeId, episodeId]);
 
-    const handleVideoChange = (e) => {
-        const selectedUrl = e.target.value;
-        const video = videoList.find(v => v.url === selectedUrl);
-        if (video) {
-            setSelectedVideo(video);
-        } else {
-            console.error('Video not found for URL:', selectedUrl);
-        }
-    };
+    // const handleVideoChange = (e) => {
+    //     const selectedUrl = e.target.value;
+    //     const video = videoList.find(v => v.url === selectedUrl);
+    //     if (video) {
+    //         setSelectedVideo(video);
+    //     } else {
+    //         console.error('Video not found for URL:', selectedUrl);
+    //     }
+    // };
 
-    const handleNavigateEpisode = (targetEpisode) => {
-        navigate(`/anime/${animeCode}/${animeId}/${targetEpisode}`);
+    const handleNavigateEpisode = (linkRef) => {
+        navigate(`/anime/episode/${linkRef}`);
     };
 
     const toggleDropdown = () => {
@@ -63,35 +75,34 @@ const Video = () => {
     return (
         <div className="flex flex-row bgColorPrimary3 dark:bg-black py-8 sm:py-20 lg:px-40 gap-4">
             <div className='sm:w-4/5'>
-                <video className="w-full h-auto rounded-lg" controls key={selectedVideo ? selectedVideo.url : ''}>
-                    <source src={selectedVideo ? selectedVideo.url : ''} type={selectedVideo ? selectedVideo.type : ''} />
-                </video>
+                {selectedVideo && <VideoPlayer videoUrl={selectedVideo} />}
+
+
                 <div className="mt-4 px-2 sm:px-0">
-                    <select
+                    {/* <select
                         className="px-4 py-2 mr-2 bgColorSecond active:bg-yellow-100 dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
                         onChange={handleVideoChange}
                         value={selectedVideo ? selectedVideo.url : ''}
                     >
                         {videoList.length > 0 ? videoList.map((video, index) => (
                             <option key={index} value={video.url}>
-                                {video.size.replace('kuramadrive', 'drive')}
+                                {video.size}
                             </option>
                         )) : <option>No videos available</option>}
-                    </select>
+                    </select> */}
 
-                    {episode.prevEpisodeNumber && (
+                    {episode?.relative?.[0]?.link_ref && (
                         <button
                             className="px-4 py-2 mr-2 bgColorSecond dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
-                            onClick={() => handleNavigateEpisode(episode.prevEpisodeNumber)}
+                            onClick={() => handleNavigateEpisode(episode.relative[0].link_ref)}
                         >
                             <FontAwesomeIcon icon={faChevronLeft} />
                         </button>
                     )}
-
-                    {episode.nextEpisodeNumber && (
+                    {episode?.relative?.[2]?.link_ref && (
                         <button
                             className="px-4 py-2 bgColorSecond dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
-                            onClick={() => handleNavigateEpisode(episode.nextEpisodeNumber)}
+                            onClick={() => handleNavigateEpisode(episode.relative[2].link_ref)}
                         >
                             <FontAwesomeIcon icon={faChevronRight} />
                         </button>
@@ -107,23 +118,29 @@ const Video = () => {
                         </h2>
                         <FontAwesomeIcon icon={isDropdownOpen ? faCaretUp : faCaretDown} className='dark:text-white' />
                     </button>
-
                     {isDropdownOpen && (
                         <div className='bgColorPrimary3 dark:bg-gray-900 p-5 rounded-lg shadow-md mt-2'>
                             <div className="grid grid-cols-3 gap-2">
-                                {animeData.episodeList.map((episode, index) => {
-                                    const episodeNumber = episode.title.match(/\d+/)?.[0] || index + 1;
+                                {episodeList
+                                    ?.map((episode) => {
+                                        const match = episode.episode_title.match(/Episode\s(\d+)/i);
+                                        const episodeNumber = match ? parseInt(match[1]) : 0;
 
-                                    return (
+                                        return {
+                                            ...episode,
+                                            episodeNumber,
+                                        };
+                                    })
+                                    .sort((a, b) => a.episodeNumber - b.episodeNumber)
+                                    .map((episode, index) => (
                                         <Link
                                             key={index}
-                                            to={`/anime/${animeCode}/${animeId}/${episodeNumber}`}
+                                            to={`/anime/episode/${episode.episode_id}`}
                                             className="bg-yellow-100 p-1 flex flex-row shadow-md font-bold rounded-lg items-center text-center justify-center hover:text-white hover:bg-yellow-500 transition-colors"
                                         >
-                                            {episode.title}
+                                            {episode.episodeNumber}
                                         </Link>
-                                    );
-                                })}
+                                    ))}
                             </div>
                         </div>
                     )}
@@ -134,37 +151,44 @@ const Video = () => {
 
                         <div>
                             <h1 className="text-l lg:text-2xl mb-2 font-black text-gray-600 dark:text-white">{animeData.title}</h1>
-                            <span className='font-semibold'>{animeData.type}</span><span> | </span><span className='font-semibold'>Episode {episodeNumber}</span><br />
+                            <span className='font-semibold'>{animeData.title}</span><span> | </span><span className='font-semibold'>Episode {episodeId.match(/episode-(\d+)/)[1]} </span><br />
                         </div>
                     </div>
                     <h5 className='pt-4 font-semibold'>Synopsis :</h5>
-                    <p>{animeData.synopsis}</p>
+                    <p>{animeData.sinopsis}</p>
                 </div>
                 <div className='mt-10 shadow-md py-6 px-4 dark:bg-gray-900 rounded-lg sm:w-3/4'>
                     <h3 className='font-semibold mb-4 dark:text-white'>Download Link : </h3>
-                    {episode?.downloadLinks?.map((downloadItem, index) => (
-                        downloadItem.links?.length > 0 && (
-                            <div key={index} className='mb-10'>
-                                <h3 className='mb-4 font-black dark:text-white'>{downloadItem.quality}</h3>
-                                <hr className='w-full h-1 bg-yellow-500 mb-6' />
-                                <div className="flex flex-wrap gap-2">
-                                    {downloadItem.links.map((download, linkIndex) => (
-                                        <Link
-                                            key={linkIndex}
-                                            to={download.url}
-                                            target='_blank'
-                                            className="bg-yellow-100 text-lg px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
-                                        >
-                                            <button>
-                                                {download.title}
-                                            </button>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                        )
-                    ))}
+                    {episode.quality && (
+                        <>
+                            {['low_quality', 'medium_quality', 'high_quality'].map((qualityType) => {
+                                const qualityData = episode.quality[qualityType];
+                                if (!qualityData) return null;
 
+                                return (
+                                    <div key={qualityType} className="mb-10">
+                                        <h3 className="mb-4 font-black dark:text-white">{qualityData.quality}</h3>
+                                        <hr className="w-full h-1 bg-yellow-500 mb-6" />
+                                        <div className="flex flex-wrap gap-2">
+                                            {qualityData.download_links.map((linkObj, index) => (
+                                                <a
+                                                    key={index}
+                                                    href={linkObj.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="bg-yellow-100 text-lg px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
+                                                >
+                                                    <button>
+                                                        {linkObj.host}
+                                                    </button>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </>
+                    )}
                 </div>
             </div>
             <div className='hidden sm:block w-1/5 bgColorPrimary3 dark:bg-gray-900 p-5 rounded-lg h-96 shadow-md overflow-y-auto'>
@@ -172,19 +196,27 @@ const Video = () => {
                     Episode
                 </h2>
                 <div className="flex gap-2 grid grid-cols-3">
-                    {animeData.episodeList.map((episode, index) => {
-                        const episodeNumber = episode.title.match(/\d+/)?.[0] || index + 1;
+                    {episodeList
+                        ?.map((episode) => {
+                            const match = episode.episode_title.match(/Episode\s(\d+)/i);
+                            const episodeNumber = match ? parseInt(match[1]) : 0;
 
-                        return (
+                            return {
+                                ...episode,
+                                episodeNumber,
+                            };
+                        })
+                        .sort((a, b) => a.episodeNumber - b.episodeNumber)
+                        .map((episode, index) => (
                             <Link
                                 key={index}
-                                to={`/anime/${animeCode}/${animeId}/${episodeNumber}`}
+                                to={`/anime/episode/${episode.episode_id}`}
+                                state={{ animeId }}
                                 className="bg-yellow-100 p-1 flex flex-row shadow-md font-bold rounded-lg items-center text-center justify-center hover:text-white hover:bg-yellow-500 transition-colors"
                             >
-                                {episode.title}
+                                {episode.episodeNumber}
                             </Link>
-                        );
-                    })}
+                        ))}
                 </div>
             </div>
         </div>

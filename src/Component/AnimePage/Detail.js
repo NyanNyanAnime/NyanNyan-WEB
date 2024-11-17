@@ -8,6 +8,7 @@ const Detail = () => {
     const { animeId } = useParams();
     const [animeData, setAnimeData] = useState([]);
     const [batch, setBatch] = useState([]);
+    const [episodeList, setEpisodeList] = useState([])
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -15,8 +16,8 @@ const Detail = () => {
             setLoading(true);
             try {
                 const res = await axios.get(`https://api.aninyan.com/anime/details/${animeId}`);
-                setAnimeData(res.data);
-                console.log('Fetched data:', res.data);
+                setAnimeData(res.data.data);
+                setEpisodeList(res.data.episode_list)
             } catch (error) {
                 console.error('Error fetching anime details:', error);
             } finally {
@@ -54,12 +55,12 @@ const Detail = () => {
                     <img
                         className="object-cover object-center w-full h-auto rounded-xl"
                         id="animeimg"
-                        src={animeData.data.image}
-                        alt={animeData.data.title}
+                        src={animeData.image}
+                        alt={animeData.title}
                     />
                     <div className="mt-4">
                         <h1 className="text-2xl lg:text-3xl mb-2 lg:mb-4 text-gray-600 dark:text-gray-400 font-black rounded-lg">
-                            {animeData.data.title}
+                            {animeData.title}
                         </h1>
                     </div>
                 </div>
@@ -71,47 +72,47 @@ const Detail = () => {
                         <tbody>
                             <tr className="bg-yellow-100 dark:bg-gray-700">
                                 <th className="px-3 py-3">Title</th>
-                                <td className="px-3 py-3">{animeData.data.main_title}</td>
+                                <td className="px-3 py-3">{animeData.main_title}</td>
                             </tr>
                             <tr>
                                 <th className="px-3 py-3">Japanese</th>
-                                <td className="px-3 py-3">{animeData.data.japanese}</td>
+                                <td className="px-3 py-3">{animeData.japanese}</td>
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700">
                                 <th className="px-3 py-3">Score</th>
-                                <td className="px-3 py-3">{animeData.data.score ? animeData.data.score : "-"}</td>
+                                <td className="px-3 py-3">{animeData.score ? animeData.score : "-"}</td>
                             </tr>
                             <tr>
                                 <th className="px-3 py-3">Producers</th>
-                                <td className="px-3 py-3">{animeData.data.producers.join(", ")}</td>
+                                <td className="px-3 py-3">{animeData.producers.join(", ")}</td>
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700">
                                 <th className="px-3 py-3">type</th>
-                                <td className="px-3 py-3">{animeData.data.type}</td>
+                                <td className="px-3 py-3">{animeData.type}</td>
                             </tr>
                             <tr>
                                 <th className="px-3 py-3">Status</th>
-                                <td className="px-3 py-3">{animeData.data.status}</td>
+                                <td className="px-3 py-3">{animeData.status}</td>
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700">
                                 <th className="px-3 py-3">Total Episode</th>
-                                <td className="px-3 py-3">{animeData.data.total_episode}</td>
+                                <td className="px-3 py-3">{animeData.total_episode}</td>
                             </tr>
                             <tr>
                                 <th className="px-3 py-3">Duration</th>
-                                <td className="px-3 py-3">{animeData.data.duration}</td>
+                                <td className="px-3 py-3">{animeData.duration}</td>
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700">
                                 <th className="px-3 py-3">Release Date</th>
-                                <td className="px-3 py-3">{animeData.data.release_date}</td>
+                                <td className="px-3 py-3">{animeData.release_date}</td>
                             </tr>
                             <tr>
                                 <th className="px-3 py-3">Studio</th>
-                                <td className="px-3 py-3">{animeData.data.studios.join(", ")}</td>
+                                <td className="px-3 py-3">{animeData.studios.join(", ")}</td>
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700 rounded-lgs">
                                 <th className="px-3 py-3">Genre</th>
-                                <td className="px-3 py-3">{animeData.data.genres}</td>
+                                <td className="px-3 py-3">{animeData.genres}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -119,7 +120,7 @@ const Detail = () => {
                     <div className="pt-8">
                         <span className="bgColorSecond text-xl font-bold dark:text-gray-800 rounded-lg px-3 py-1">Sinopsis</span>
                         <p className='dark:text-gray-400 mt-4'>
-                            {animeData.data.sinopsis.join(", ")}
+                            {animeData.sinopsis.join(", ")}
                         </p>
                     </div>
 
@@ -128,7 +129,7 @@ const Detail = () => {
                             <span className="inline-block bgColorSecond dark:text-gray-800 font-bold rounded-lg px-3 py-1">Episodes</span>
                         </h2>
                         <div className="flex flex-wrap gap-4">
-                            {animeData.episode_list
+                            {episodeList
                                 ?.map((episode) => {
                                     const match = episode.episode_title.match(/Episode\s(\d+)/i);
                                     const episodeNumber = match ? parseInt(match[1]) : 0;
@@ -142,7 +143,8 @@ const Detail = () => {
                                 .map((episode, index) => (
                                     <Link
                                         key={index}
-                                        to={`/anime/episode/${animeData.episode_list.episode_id}`}
+                                        to={`/anime/episode/${episode.episode_id}`}
+                                        state={{ animeId }}
                                         className="bg-yellow-100 py-2 px-4 font-bold rounded-lg shadow-md hover:text-white hover:bg-yellow-400 transition-colors"
                                     >
                                         {episode.episodeNumber}
@@ -184,12 +186,12 @@ const Detail = () => {
                     <img
                         className="object-cover object-center w-full h-auto rounded-xl"
                         id="animeimg"
-                        src={animeData.data.image}
-                        alt={animeData.data.title}
+                        src={animeData.image}
+                        alt={animeData.title}
                     />
                     <div className="mt-4">
                         <h1 className="text-2xl lg:text-3xl mb-2 lg:mb-4 text-gray-600 dark:text-gray-400 font-black rounded-lg">
-                            {animeData.data.title}
+                            {animeData.title}
                         </h1>
                     </div>
                 </div>
