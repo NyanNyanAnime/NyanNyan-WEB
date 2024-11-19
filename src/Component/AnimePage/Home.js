@@ -46,7 +46,11 @@ const Home = () => {
                 );
 
                 const detailResponses = await Promise.all(detailRequests);
-                const details = detailResponses.map(res => res.data.data);
+
+                const details = detailResponses.map((res, index) => ({
+                    ...res.data.data,
+                    anime_id: animeIds[index]
+                }));
 
                 setAnimeDetails(details);
 

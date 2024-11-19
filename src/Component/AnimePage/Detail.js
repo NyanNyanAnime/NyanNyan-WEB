@@ -106,7 +106,7 @@ const Detail = () => {
                     <div className="pt-8">
                         <span className="bgColorSecond text-xl font-bold dark:text-gray-800 rounded-lg px-3 py-1">Sinopsis</span>
                         <p className='dark:text-gray-400 mt-4'>
-                            {animeData.sinopsis.join(", ")}
+                            {animeData.sinopsis.join(" ")}
                         </p>
                     </div>
 
