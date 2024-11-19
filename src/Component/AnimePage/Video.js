@@ -153,6 +153,16 @@ const Video = () => {
                             <span className='font-semibold'>{animeData.title}</span><span> | </span><span className='font-semibold'>Episode {episodeId.match(/episode-(\d+)/)[1]} </span><br />
                         </div>
                     </div>
+                    <div className='mt-8 flex flex-wrap gap-2'>
+                        {animeData.genres.map((genre, index) => (
+                            <span
+                                key={index}
+                                className='my-1 px-4 py-2 text-sm font-semibold text-white border-2 border-yellow-500 rounded-full'
+                            >
+                                {genre}
+                            </span>
+                        ))}
+                    </div>
                     <h5 className='pt-4 font-semibold'>Synopsis :</h5>
                     <p>{animeData.sinopsis}</p>
                 </div>
@@ -161,12 +171,12 @@ const Video = () => {
 
                     {episode?.download_links?.mp4 && Object.entries(episode.download_links.mp4).some(([quality, links]) => links.length > 0) && (
                         <>
-                            <span className='mb-4 px-2 pb-4 font-black bg-yellow-500 rounded-md dark:text-white'>MP4</span>
+                            <span className='px-4 font-black bg-yellow-500 rounded-md dark:text-white'>MP4</span>
                             {Object.entries(episode.download_links.mp4).map(([quality, links], index) => (
                                 links.length > 0 && (
-                                    <div key={index} className='mb-10'>
+                                    <div key={index} className='my-4'>
                                         <h3 className='mb-4 font-black dark:text-white'>{quality}</h3>
-                                        <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
+                                        <hr className='w-full h-1 bg-yellow-500 mb-6' />
                                         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                                             {links.map((download, linkIndex) => (
                                                 <Link
@@ -189,12 +199,12 @@ const Video = () => {
 
                     {episode?.download_links?.mkv && Object.entries(episode.download_links.mkv).some(([quality, links]) => links.length > 0) && (
                         <>
-                            <span className='mb-4 px-2 pb-4 font-black bg-yellow-500 rounded-md dark:text-white'>MKV</span>
+                            <span className='px-4 font-black bg-yellow-500 rounded-md dark:text-white'>MKV</span>
                             {Object.entries(episode.download_links.mkv).map(([quality, links], index) => (
                                 links.length > 0 && (
-                                    <div key={index} className='mb-10'>
+                                    <div key={index} className='my-4'>
                                         <h3 className='mb-4 font-black dark:text-white'>{quality}</h3>
-                                        <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
+                                        <hr className='w-full h-1 bg-yellow-500 mb-6' />
                                         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                                             {links.map((download, linkIndex) => (
                                                 <Link
