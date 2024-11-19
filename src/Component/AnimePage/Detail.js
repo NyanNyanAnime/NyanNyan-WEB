@@ -98,7 +98,7 @@ const Detail = () => {
                             </tr>
                             <tr className="bg-yellow-100 dark:bg-gray-700 rounded-lgs">
                                 <th className="px-3 py-3">Genre</th>
-                                <td className="px-3 py-3">{animeData.genres}</td>
+                                <td className="px-3 py-3">{animeData.genres.join(", ")}</td>
                             </tr>
                         </tbody>
                     </table>

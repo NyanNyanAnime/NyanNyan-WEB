@@ -158,30 +158,64 @@ const Video = () => {
                 </div>
                 <div className='mt-10 shadow-md py-6 px-4 dark:bg-gray-900 rounded-lg sm:w-3/4'>
                     <h3 className='font-semibold mb-4 dark:text-white'>Download Link : </h3>
-                    {episode?.download_links?.mp4 && Object.entries(episode.download_links.mp4).map(([quality, links], index) => (
-                        links.length > 0 && (
-                            <div key={index} className='mb-10'>
-                                <h3 className='mb-4 font-black dark:text-white'>{quality}</h3>
-                                <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
-                                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                                    {links.slice(0, 6).map((download, linkIndex) => (
-                                        <Link
-                                            key={linkIndex}
-                                            to={download.link}
-                                            target='_blank'
-                                            className="bg-yellow-100 text-sm px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
-                                        >
-                                            <button>
-                                                {download.host} ({download.size})
-                                            </button>
-                                        </Link>
-                                    ))}
-                                </div>
 
-                            </div>
-                        )
-                    ))}
+                    {episode?.download_links?.mp4 && Object.entries(episode.download_links.mp4).some(([quality, links]) => links.length > 0) && (
+                        <>
+                            <span className='mb-4 px-2 pb-4 font-black bg-yellow-500 rounded-md dark:text-white'>MP4</span>
+                            {Object.entries(episode.download_links.mp4).map(([quality, links], index) => (
+                                links.length > 0 && (
+                                    <div key={index} className='mb-10'>
+                                        <h3 className='mb-4 font-black dark:text-white'>{quality}</h3>
+                                        <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
+                                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                                            {links.map((download, linkIndex) => (
+                                                <Link
+                                                    key={linkIndex}
+                                                    to={download.link}
+                                                    target='_blank'
+                                                    className="bg-yellow-100 text-sm px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
+                                                >
+                                                    <button>
+                                                        {download.host} ({download.size})
+                                                    </button>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )
+                            ))}
+                        </>
+                    )}
+
+                    {episode?.download_links?.mkv && Object.entries(episode.download_links.mkv).some(([quality, links]) => links.length > 0) && (
+                        <>
+                            <span className='mb-4 px-2 pb-4 font-black bg-yellow-500 rounded-md dark:text-white'>MKV</span>
+                            {Object.entries(episode.download_links.mkv).map(([quality, links], index) => (
+                                links.length > 0 && (
+                                    <div key={index} className='mb-10'>
+                                        <h3 className='mb-4 font-black dark:text-white'>{quality}</h3>
+                                        <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
+                                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                                            {links.map((download, linkIndex) => (
+                                                <Link
+                                                    key={linkIndex}
+                                                    to={download.link}
+                                                    target='_blank'
+                                                    className="bg-yellow-100 text-sm px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
+                                                >
+                                                    <button>
+                                                        {download.host} ({download.size})
+                                                    </button>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )
+                            ))}
+                        </>
+                    )}
                 </div>
+
             </div>
             <div className='hidden sm:block w-1/5 bgColorPrimary3 dark:bg-gray-900 p-5 rounded-lg h-96 shadow-md overflow-y-auto'>
                 <h2 className="text-lg lg:text-xl mb-8 bgColorSecond dark:text-gray-800 font-bold text-center rounded-lg px-3 py-1">
@@ -211,7 +245,7 @@ const Video = () => {
                                 key={index}
                                 to={`/anime/episode/${episode.episode_id}`}
                                 state={{ animeId }}
-                                className="bg-yellow-100 py-2 px-4 font-bold rounded-lg shadow-md hover:text-white hover:bg-yellow-400 transition-colors"
+                                className="bg-yellow-100 py-2 px-4 font-bold text-center rounded-lg shadow-md hover:text-white hover:bg-yellow-400 transition-colors"
                             >
                                 {episode.episodeNumber}
                             </Link>
