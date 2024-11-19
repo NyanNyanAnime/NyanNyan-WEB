@@ -106,7 +106,9 @@ const Detail = () => {
                     <div className="pt-8">
                         <span className="bgColorSecond text-xl font-bold dark:text-gray-800 rounded-lg px-3 py-1">Sinopsis</span>
                         <p className='dark:text-gray-400 mt-4'>
-                            {animeData.sinopsis.join(" ")}
+                            {Array.isArray(animeData.sinopsis)
+                                ? animeData.sinopsis.join(" ")
+                                : animeData.sinopsis}
                         </p>
                     </div>
 
@@ -116,7 +118,14 @@ const Detail = () => {
                         </h2>
                         <div className="flex flex-wrap gap-4">
                             {episodeList
-                                ?.map((episode) => {
+                                ?.filter((episode) => {
+                                    const isBatch = /batch/i.test(episode.episode_title);
+                                    const isRange = /episode\s\d+\s?-\s?\d+/i.test(episode.episode_title);
+                                    const isEnd = /episode\s\d+\s?[-–]\s?\d+\s?\(end\)/i.test(episode.episode_title);
+
+                                    return !isBatch && !isRange && !isEnd;
+                                })
+                                .map((episode) => {
                                     const match = episode.episode_title.match(/Episode\s(\d+)/i);
                                     const episodeNumber = match ? parseInt(match[1]) : 0;
 
@@ -137,6 +146,7 @@ const Detail = () => {
                                     </Link>
                                 ))}
                         </div>
+
                     </div>
 
                     {/* <div className="pt-16">

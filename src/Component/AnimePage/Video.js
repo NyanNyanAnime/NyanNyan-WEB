@@ -28,12 +28,10 @@ const Video = () => {
                 const episodeRes = await axios.get(`https://api.aninyan.com/anime/episode/${episodeId}`);
                 setEpisode(episodeRes.data.data);
 
-                const urlDetails = `https://api.aninyan.com/anime/details/${animeId}`
                 const animeRes = await axios.get(`https://api.aninyan.com/anime/details/${animeId}`);
                 setAnimeData(animeRes.data.data);
                 setEpisodeList(animeRes.data.episode_list);
 
-                console.log(urlDetails)
                 if (episodeRes) {
                     const mirrorEmbed = episodeRes.data.data.mirror_embed2;
                     if (mirrorEmbed.streaming.length > 0) {
@@ -191,7 +189,14 @@ const Video = () => {
                 </h2>
                 <div className="flex gap-2 grid grid-cols-3">
                     {episodeList
-                        ?.map((episode) => {
+                        ?.filter((episode) => {
+                            const isBatch = /batch/i.test(episode.episode_title);
+                            const isRange = /episode\s\d+\s?-\s?\d+/i.test(episode.episode_title);
+                            const isEnd = /episode\s\d+\s?[-–]\s?\d+\s?\(end\)/i.test(episode.episode_title);
+
+                            return !isBatch && !isRange && !isEnd;
+                        })
+                        .map((episode) => {
                             const match = episode.episode_title.match(/Episode\s(\d+)/i);
                             const episodeNumber = match ? parseInt(match[1]) : 0;
 
@@ -206,7 +211,7 @@ const Video = () => {
                                 key={index}
                                 to={`/anime/episode/${episode.episode_id}`}
                                 state={{ animeId }}
-                                className="bg-yellow-100 p-1 flex flex-row shadow-md font-bold rounded-lg items-center text-center justify-center hover:text-white hover:bg-yellow-500 transition-colors"
+                                className="bg-yellow-100 py-2 px-4 font-bold rounded-lg shadow-md hover:text-white hover:bg-yellow-400 transition-colors"
                             >
                                 {episode.episodeNumber}
                             </Link>

@@ -44,7 +44,7 @@ const SearchAnime = () => {
                         <>
                             <div className='grid grid-cols-1 sm:grid-cols-4 gap-4'>
                                 {searchResults.map((res) => (
-                                    <Link to={`/anime/details/${res.animeId}`} key={res.animeId}>
+                                    <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id}>
                                         <div className='w-full relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                                             <img className='h-64 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                                             <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.rating}</h3>
