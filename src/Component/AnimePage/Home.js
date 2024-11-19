@@ -12,9 +12,9 @@ const Home = () => {
     const [animeDetails, setAnimeDetails] = useState([]);
     const [finishedData, setFinishedData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [actionData, setActionData] = useState({});
-    const [comedyData, setComedyData] = useState({});
-    const [romanceData, setRomanceData] = useState({});
+    const [actionData, setActionData] = useState([]);
+    const [comedyData, setComedyData] = useState([]);
+    const [romanceData, setRomanceData] = useState([]);
     const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
     const isTablet = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -46,20 +46,25 @@ const Home = () => {
                 );
 
                 const detailResponses = await Promise.all(detailRequests);
-                const details = detailResponses.map(res => res.data);
+                const details = detailResponses.map(res => res.data.data);
 
                 setAnimeDetails(details);
 
+                console.log('Anime details fetched:', animeDetails);
+                console.log('Anime details fetched:', ongoingData);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
                 setLoading(false);
-                console.log(animeDetails);
             }
         };
 
         fetchData();
     }, []);
+
+    if (loading || !animeDetails || animeDetails.length === 0) {
+        return <Loading />;
+    }
 
     const truncateText = (text = '', maxLength) => {
         if (typeof text !== 'string') {
@@ -67,10 +72,6 @@ const Home = () => {
         }
         return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     };
-
-    if (loading) {
-        return <Loading />;
-    }
 
     const ongoingAnime = (res) => (
         <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
@@ -124,45 +125,54 @@ const Home = () => {
     );
 
     const slider = (res) => {
-        <div className='relative w-full bg-white shadow overflow-hidden'>
-            <img className='absolute inset-0 sm:h-[32rem] w-full object-cover' src={res.image} alt={res.title} />
-            <div className='absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent mix-blend-multiply'></div>
-            <div className='relative flex top-1/2 left-0 px-8 sm:px-40 py-20 sm:py-8 transform -translate-y-1/2 leading-8 sm:leading-10 gap-20 items-center z-10'>
-                <img className='hidden sm:block h-[32rem] rounded-lg object-cover m-10 transform rotate-12 shadow-lg shadow-yellow-300' src={res.image} alt={res.title} />
-                <div className='text-white'>
-                    <span className='sm:text-xl font-black'>{res.title}</span><br />
-                    <span className='sm:text-lg font-bold text-gray-400'>{res.score}</span><span className='text-white'> | </span>
-                    {/* <span className='sm:text-lg font-bold text-gray-400'>{res.genres.join(', ')}</span><br /> */}
-                    <p className='sm:text-lg'>{res.sinopsis}</p>
-                    <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='block mt-5'>
-                        <button className='flex flex-row items-center bgColorSecond text-black rounded-lg px-4 py-2 font-semibold duration-300 hover:scale-125'>
-                            <svg
-                                className='w-6 h-6'
-                                fill='none'
-                                stroke='currentColor'
-                                viewBox='0 0 24 24'
-                                xmlns='http://www.w3.org/2000/svg'
-                            >
-                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M5 3l14 9-14 9V3z'></path>
-                            </svg>
-                            Watch Now!</button>
-                    </Link>
+        const combinedSinopsis = Array.isArray(res.sinopsis)
+            ? res.sinopsis.join(' ')
+            : res.sinopsis;
+
+        return (
+            <div className='relative w-full bg-white shadow overflow-hidden'>
+                <img className='absolute inset-0 sm:h-[32rem] w-full object-cover' src={res.image} alt={res.title} />
+                <div className='absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent mix-blend-multiply'></div>
+                <div className='relative flex top-1/2 left-0 px-8 sm:px-40 py-20 sm:py-8 transform -translate-y-1/2 leading-8 sm:leading-10 gap-20 items-center z-10'>
+                    <img className='hidden sm:block h-[32rem] rounded-lg object-cover m-10 transform rotate-12 shadow-lg shadow-yellow-300' src={res.image} alt={res.title} />
+                    <div className='text-white'>
+                        <span className='sm:text-xl font-black'>{res.title}</span><br />
+                        <span className='sm:text-lg font-bold text-gray-400'>{res.score}</span><span className='text-white'> | </span>
+                        <span className='sm:text-lg font-bold text-gray-400'>{res.genres.join(', ')}</span><br />
+                        <p className='sm:text-lg'>{truncateText(combinedSinopsis, text)}</p>
+
+                        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='block mt-5'>
+                            <button className='flex flex-row items-center bgColorSecond text-black rounded-lg px-4 py-2 font-semibold duration-300 hover:scale-125'>
+                                <svg
+                                    className='w-6 h-6'
+                                    fill='none'
+                                    stroke='currentColor'
+                                    viewBox='0 0 24 24'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M5 3l14 9-14 9V3z'></path>
+                                </svg>
+                                Watch Now!
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
-        </div>
+        );
     };
 
     return (
         <div className='bgColorPrimary3 dark:bg-black'>
-            {/* <div className='relative overflow-hidden'>
-                <Slider
-                    data={animeDetails.data}
-                    itemsPerPage={1}
-                    renderItem={slider}
-                    autoPlayInterval={7000}
-                />
-            </div> */}
-
+            <div className='relative overflow-hidden'>
+                {animeDetails && animeDetails.length > 0 && (
+                    <Slider
+                        data={animeDetails}
+                        itemsPerPage={1}
+                        renderItem={slider}
+                        autoPlayInterval={7000}
+                    />
+                )}
+            </div>
             <div className='pt-16 sm:pt-36 sm:pb-16 sm:px-40'>
                 <div className='w-full mb-8'>
                     <div className='mb-4 mx-4'>

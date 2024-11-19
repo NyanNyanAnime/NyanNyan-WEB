@@ -75,8 +75,9 @@ const Video = () => {
     return (
         <div className="flex flex-row bgColorPrimary3 dark:bg-black py-8 sm:py-20 lg:px-40 gap-4">
             <div className='sm:w-4/5'>
-                {selectedVideo && <VideoPlayer videoUrl={selectedVideo} />}
-
+                <div className="w-full h-auto rounded-lg">
+                    {selectedVideo && <VideoPlayer videoUrl={selectedVideo} />}
+                </div>
 
                 <div className="mt-4 px-2 sm:px-0">
                     {/* <select
@@ -159,36 +160,29 @@ const Video = () => {
                 </div>
                 <div className='mt-10 shadow-md py-6 px-4 dark:bg-gray-900 rounded-lg sm:w-3/4'>
                     <h3 className='font-semibold mb-4 dark:text-white'>Download Link : </h3>
-                    {episode.quality && (
-                        <>
-                            {['low_quality', 'medium_quality', 'high_quality'].map((qualityType) => {
-                                const qualityData = episode.quality[qualityType];
-                                if (!qualityData) return null;
+                    {episode?.download_links?.mp4 && Object.entries(episode.download_links.mp4).map(([quality, links], index) => (
+                        links.length > 0 && (
+                            <div key={index} className='mb-10'>
+                                <h3 className='mb-4 font-black dark:text-white'>{quality}</h3>
+                                <hr className='w-full sm:w-2/3 h-1 bg-yellow-500 mb-6' />
+                                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                                    {links.slice(0, 6).map((download, linkIndex) => (
+                                        <Link
+                                            key={linkIndex}
+                                            to={download.link}
+                                            target='_blank'
+                                            className="bg-yellow-100 text-sm px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
+                                        >
+                                            <button>
+                                                {download.host} ({download.size})
+                                            </button>
+                                        </Link>
+                                    ))}
+                                </div>
 
-                                return (
-                                    <div key={qualityType} className="mb-10">
-                                        <h3 className="mb-4 font-black dark:text-white">{qualityData.quality}</h3>
-                                        <hr className="w-full h-1 bg-yellow-500 mb-6" />
-                                        <div className="flex flex-wrap gap-2">
-                                            {qualityData.download_links.map((linkObj, index) => (
-                                                <a
-                                                    key={index}
-                                                    href={linkObj.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="bg-yellow-100 text-lg px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
-                                                >
-                                                    <button>
-                                                        {linkObj.host}
-                                                    </button>
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </>
-                    )}
+                            </div>
+                        )
+                    ))}
                 </div>
             </div>
             <div className='hidden sm:block w-1/5 bgColorPrimary3 dark:bg-gray-900 p-5 rounded-lg h-96 shadow-md overflow-y-auto'>
