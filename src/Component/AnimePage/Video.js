@@ -11,13 +11,16 @@ const Video = () => {
     const location = useLocation();
     const { animeId } = location.state || {};
     const { episodeId } = useParams();
-    const navigate = useNavigate();
     const [episode, setEpisode] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [animeData, setAnimeData] = useState([]);
     const [episodeList, setEpisodeList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
+    const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
+    const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
+
 
 
     useEffect(() => {
@@ -48,22 +51,13 @@ const Video = () => {
         fetchData();
     }, [animeId, episodeId]);
 
-    // const handleVideoChange = (e) => {
-    //     const selectedUrl = e.target.value;
-    //     const video = videoList.find(v => v.url === selectedUrl);
-    //     if (video) {
-    //         setSelectedVideo(video);
-    //     } else {
-    //         console.error('Video not found for URL:', selectedUrl);
-    //     }
-    // };
+    const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+    const toggleDropdown1 = () => setIsDropdownOpen1(!isDropdownOpen1);
+    const toggleDropdown2 = () => setIsDropdownOpen2(!isDropdownOpen2);
+    const toggleDropdown3 = () => setIsDropdownOpen3(!isDropdownOpen3);
 
-    const handleNavigateEpisode = (linkRef) => {
-        navigate(`/anime/episode/${linkRef}`);
-    };
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+    const handleVideoChange = (link) => {
+        setSelectedVideo(link);
     };
 
     if (loading) {
@@ -76,37 +70,94 @@ const Video = () => {
                 <div className="w-full h-auto rounded-lg">
                     {selectedVideo && <VideoPlayer videoUrl={selectedVideo} />}
                 </div>
-
-                <div className="mt-4 px-2 sm:px-0">
-                    {/* <select
-                        className="px-4 py-2 mr-2 bgColorSecond active:bg-yellow-100 dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
-                        onChange={handleVideoChange}
-                        value={selectedVideo ? selectedVideo.url : ''}
-                    >
-                        {videoList.length > 0 ? videoList.map((video, index) => (
-                            <option key={index} value={video.url}>
-                                {video.size}
-                            </option>
-                        )) : <option>No videos available</option>}
-                    </select> */}
-
-                    {episode?.relative?.[0]?.link_ref && (
-                        <button
+                <div className="flex items-center gap-4">
+                    {episode?.relative?.find(item => item.title_ref === "Previous Eps.")?.link_ref && (
+                        <Link
                             className="px-4 py-2 mr-2 bgColorSecond dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
-                            onClick={() => handleNavigateEpisode(episode.relative[0].link_ref)}
+                            to={`/anime/episode/${episode.relative.find(item => item.title_ref === "Previous Eps.").link_ref}`}
+                            state={{ animeId }}
                         >
                             <FontAwesomeIcon icon={faChevronLeft} />
-                        </button>
+                        </Link>
                     )}
-                    {episode?.relative?.[2]?.link_ref && (
+
+                    <div>
                         <button
+                            onClick={toggleDropdown1}
+                            className="px-4 py-2 bg-yellow-500 text-white rounded-lg"
+                        >
+                            {episode?.mirror_embed1?.quality || "Embed 1"}
+                        </button>
+                        {isDropdownOpen1 && (
+                            <div className="mt-2 text-white  bg-white dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
+                                {episode?.mirror_embed1?.streaming?.map((stream, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleVideoChange(stream.link)}
+                                        className="block w-full px-4 py-2 text-left hover:bg-yellow-500 hover:text-white"
+                                    >
+                                        {stream.driver}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div>
+                        <button
+                            onClick={toggleDropdown2}
+                            className="px-4 py-2 bg-yellow-500 text-white rounded-lg"
+                        >
+                            {episode?.mirror_embed2?.quality || "Embed 2"}
+                        </button>
+                        {isDropdownOpen2 && (
+                            <div className="mt-2 text-white bg-white dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
+                                {episode?.mirror_embed2?.streaming?.map((stream, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleVideoChange(stream.link)}
+                                        className="block w-full px-4 py-2 text-left hover:bg-yellow-500 hover:text-white"
+                                    >
+                                        {stream.driver}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div>
+                        <button
+                            onClick={toggleDropdown3}
+                            className="px-4 py-2 bg-yellow-500 text-white rounded-lg"
+                        >
+                            {episode?.mirror_embed3?.quality || "Embed 3"}
+                        </button>
+                        {isDropdownOpen3 && (
+                            <div className="mt-2 text-white bg-white dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
+                                {episode?.mirror_embed3?.streaming?.map((stream, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleVideoChange(stream.link)}
+                                        className="block w-full px-4 py-2 text-left hover:bg-yellow-500 hover:text-white"
+                                    >
+                                        {stream.driver}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {episode?.relative?.find(item => item.title_ref === "Next Eps.")?.link_ref && (
+                        <Link
                             className="px-4 py-2 bgColorSecond dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
-                            onClick={() => handleNavigateEpisode(episode.relative[2].link_ref)}
+                            to={`/anime/episode/${episode.relative.find(item => item.title_ref === "Next Eps.").link_ref}`}
+                            state={{ animeId }}
                         >
                             <FontAwesomeIcon icon={faChevronRight} />
-                        </button>
+                        </Link>
                     )}
                 </div>
+
                 <div className='sm:hidden w-full'>
                     <button
                         onClick={toggleDropdown}
