@@ -152,12 +152,12 @@ const Header = () => {
                         <input
                             type="search"
                             id="title-search"
-                            className="block w-full p-2.5 text-sm bg-gray-600 rounded-lg border border-gray-600 focus:ring-yellow-500 focus:border-yellow-500 placeholder-gray-500 text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
+                            className="block w-full p-2.5 pl-8 text-sm bg-gray-600 rounded-lg border border-gray-600 focus:ring-yellow-500 focus:border-yellow-500 placeholder-gray-500 text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
                             placeholder="Search..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <div className="absolute inset-y-0 left-2 flex items-center pr-3 pointer-events-none">
                             <FontAwesomeIcon icon={faSearch} className='text-white' />
                         </div>
                     </div>

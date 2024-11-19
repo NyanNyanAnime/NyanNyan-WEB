@@ -106,9 +106,11 @@ const Detail = () => {
                     <div className="pt-8">
                         <span className="bgColorSecond text-xl font-bold dark:text-gray-800 rounded-lg px-3 py-1">Sinopsis</span>
                         <p className='dark:text-gray-400 mt-4'>
-                            {Array.isArray(animeData.sinopsis)
-                                ? animeData.sinopsis.join(" ")
-                                : animeData.sinopsis}
+                            {animeData.sinopsis && animeData.sinopsis.length > 0
+                                ? Array.isArray(animeData.sinopsis)
+                                    ? animeData.sinopsis.join(" ")
+                                    : animeData.sinopsis
+                                : "Synopsis not available."}
                         </p>
                     </div>
 

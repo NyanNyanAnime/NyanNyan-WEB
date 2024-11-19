@@ -13,6 +13,7 @@ const Home = () => {
     const [finishedData, setFinishedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [actionData, setActionData] = useState([]);
+    const [adventureData, setAdventureData] = useState([]);
     const [comedyData, setComedyData] = useState([]);
     const [romanceData, setRomanceData] = useState([]);
     const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
@@ -25,12 +26,13 @@ const Home = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const [ongoingRes, finishedRes, actionRes, comedyRes, romanceRes] = await Promise.all([
+                const [ongoingRes, finishedRes, actionRes, comedyRes, romanceRes, adventureRes] = await Promise.all([
                     axios.get('https://api.aninyan.com/anime/ongoing/1'),
                     axios.get('https://api.aninyan.com/anime/finished/1'),
                     axios.get('https://api.aninyan.com/anime/genres/action/1'),
                     axios.get('https://api.aninyan.com/anime/genres/comedy/1'),
-                    axios.get('https://api.aninyan.com/anime/genres/romance/1')
+                    axios.get('https://api.aninyan.com/anime/genres/romance/1'),
+                    axios.get('https://api.aninyan.com/anime/genres/adventure/1'),
                 ]);
 
                 setOngoingData(ongoingRes.data);
@@ -38,6 +40,7 @@ const Home = () => {
                 setActionData(actionRes.data);
                 setComedyData(comedyRes.data);
                 setRomanceData(romanceRes.data);
+                setAdventureData(adventureRes.data);
 
                 const animeIds = ongoingRes.data.data.slice(0, 6).map(item => item.anime_id);
 
@@ -84,12 +87,12 @@ const Home = () => {
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.episode}</h3>
             </div>
             <h1 className='text-md dark:text-white font-semibold pt-3'>{truncateText(res.title, 20)}</h1>
-            {/* <h3 className='text-md rounded-sm text-gray-500 font-semibold'>{res.type.join(', ')}</h3> */}
+            <h3 className='text-md rounded-sm text-gray-500 font-semibold'>Update Day: {res.updated_day}</h3>
         </Link>
     );
 
-    const finishedAnime = (res) => (
-        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/4 p-4'>
+    const adventureAnime = (res) => (
+        <Link to={`/anime/details/${res.anime_id}`} key={res.anime_id} className='flex-none w-full sm:w-1/5 p-4'>
             <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                 <img className='h-80 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                 <h3 className='absolute bottom-0 left-0 text-md font-semibold bg-yellow-500/60 text-white rounded-md p-1'>{res.score}</h3>
@@ -254,7 +257,7 @@ const Home = () => {
                 <div className='w-full mb-8'>
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
-                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Finished Anime</h3>
+                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Adventure Anime</h3>
                             <Link to="/anime/finished">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
@@ -262,37 +265,37 @@ const Home = () => {
                         <span className='text-white'></span>
                     </div>
                     <Slider
-                        data={finishedData.data}
+                        data={adventureData.data}
                         itemsPerPage={itemsPerPage}
-                        renderItem={finishedAnime}
+                        renderItem={adventureAnime}
                     />
                 </div>
 
-                {/* <div className='w-full mb-8'>
+                <div className='w-full mb-8'>
                     <div className='mb-8 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-5'>
-                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Movies Anime</h3>
-                            <Link to="/">
+                            <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Finished Anime</h3>
+                            <Link to="/anime/finished">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>
                         <span className='text-white'></span>
                     </div>
                     <div className='grid grid-cols-2 sm:grid-cols-4 gap-4 px-4 mb-8'>
-                        {ongoingData.data.slice(0, 8).map((res) => (
+                        {finishedData.data.slice(0, 8).map((res) => (
                             <Link to={`/anime/${res.anime_id}`} key={res.anime_id}>
                                 <div className='w-full bg-white shadow relative overflow-hidden rounded-lg hover:transform duration-300 hover:-translate-y-2'>
                                     <img className='h-32 sm:h-64 w-full rounded-lg object-cover' src={res.image} alt={res.title} />
                                     <h3 className='absolute bottom-0 left-0 px-2 py-2 text-xs sm:text-md font-semibold text-white'>{truncateText(res.title, 20)}</h3>
                                     <div className='absolute top-0 left-0 px-2 py-2'>
-                                        <span className='text-xs font-semibold bg-yellow-100 rounded-lg px-2'>{res.score}</span>
-                                        <span className='text-xs font-semibold bg-yellow-300 rounded-lg px-2 mx-2'>{res.type}</span>
+                                        <span className='text-xs font-semibold bg-yellow-100 rounded-lg px-2'>{res.rating}</span>
+                                        <span className='text-xs font-semibold bg-yellow-300 rounded-lg px-2 mx-2'>{res.episode}</span>
                                     </div>
                                 </div>
                             </Link>
                         ))}
                     </div>
-                </div> */}
+                </div>
             </div>
             <div className='flex flex-row justify-center items-center w-full'>
                 <img src={Nyan} alt='Nyan' className='w-40 sm:w-96 mx-auto' />
