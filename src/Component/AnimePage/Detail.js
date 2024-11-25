@@ -7,7 +7,7 @@ import '../../App.css';
 const Detail = () => {
     const { animeId } = useParams();
     const [animeData, setAnimeData] = useState([]);
-    // const [batch, setBatch] = useState([]);
+    const [batch, setBatch] = useState([]);
     const [episodeList, setEpisodeList] = useState([])
     const [loading, setLoading] = useState(true);
 
@@ -16,10 +16,17 @@ const Detail = () => {
             setLoading(true);
             try {
                 const res = await axios.get(`https://api.aninyan.com/anime/details/${animeId}`);
-                // const batchRes = await axios.get(`https://api.aninyan.com/anime/batch/${animeId}`);
                 setAnimeData(res.data.data);
                 setEpisodeList(res.data.episode_list);
-                // setBatch(batchRes.data.data);
+
+                const batchEpisode = res.data.episode_list.find((episode) =>
+                    /batch/i.test(episode.episode_title)
+                );
+
+                if (batchEpisode) {
+                    const batchRes = await axios.get(`https://api.aninyan.com/anime/batch/${batchEpisode.episode_id}`);
+                    setBatch(batchRes.data);
+                }
             } catch (error) {
                 console.error('Error fetching anime details:', error);
             } finally {
@@ -29,6 +36,11 @@ const Detail = () => {
 
         fetchData();
     }, [animeId]);
+
+    const extractHostName = (host) => {
+        let hostName = host.replace(/[^a-zA-Z0-9-]/g, '');
+        return hostName.toLowerCase();
+    };
 
     if (loading) {
         return <Loading />;
@@ -151,39 +163,31 @@ const Detail = () => {
 
                     </div>
 
-                    {/* <div className="pt-16">
-                        <h2 className="text-lg lg:text-xl mb-8">
-                            <span className="inline-block bgColorSecond dark:text-gray-800 font-bold rounded-lg px-3 py-1">Download Batch :</span>
-                        </h2>
-                        {batch && (
+                    <div className='pt-12'>
+                        {batch?.data?.download_links?.length > 0 && (
                             <>
-                                {batch.download_links.map((downloadData, index) => {
-                                    const { quality, links } = downloadData;
-                                    return (
-                                        <div key={index} className="mb-10">
-                                            <h3 className="mb-4 font-black dark:text-white">{quality}</h3>
-                                            <hr className="w-full h-1 bg-yellow-500 mb-6" />
-                                            <div className="flex flex-wrap gap-2">
-                                                {links.map((linkObj, idx) => (
-                                                    <a
-                                                        key={idx}
-                                                        href={linkObj.url}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="bg-yellow-100 text-lg px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors"
-                                                    >
-                                                        <button>
-                                                            {linkObj.title}
-                                                        </button>
-                                                    </a>
-                                                ))}
-                                            </div>
+                                <h2 className="text-lg lg:text-xl mb-4">
+                                    <span className="inline-block bgColorSecond dark:text-gray-800 font-bold rounded-lg px-3 py-1">Batch</span>
+                                </h2>
+                                {batch.data.download_links.map((downloadLink, index) => (
+                                    <div key={index} className="my-4">
+                                        <h3 className="mb-4 font-black dark:text-white">{downloadLink.quality}</h3>
+                                        <hr className="w-full h-1 bg-yellow-500 mb-6" />
+                                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                                            {downloadLink.links.map((link, linkIndex) => (
+                                                <div key={linkIndex} className="bg-yellow-100 text-sm px-4 py-2 shadow-md font-bold rounded-lg hover:text-white hover:bg-yellow-500 transition-colors">
+                                                    <Link to={link.link} target="_blank">
+                                                        {link.host}
+                                                    </Link>
+                                                </div>
+                                            ))}
                                         </div>
-                                    );
-                                })}
+                                    </div>
+                                ))}
                             </>
                         )}
-                    </div> */}
+                    </div>
+
                 </div>
 
                 <div className="hidden sm:block lg:w-1/3 rounded-xl lg:ml-4 mt-4 pl-8 lg:mt-0">
