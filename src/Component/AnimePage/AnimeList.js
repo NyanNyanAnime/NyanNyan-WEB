@@ -12,9 +12,15 @@ const AnimeList = () => {
             setLoading(true);
             try {
                 const res = await axios.get('https://api.aninyan.com/anime/list');
+                console.log('Full Response:', res);
+                console.log('Response Data:', res.data);
                 setAnimeData(res.data.data);
             } catch (error) {
-                console.error('Error fetching anime data:', error);
+                console.error('Error Details:', {
+                    status: error.response?.status,
+                    data: error.response?.data,
+                    message: error.message
+                });
             } finally {
                 setLoading(false);
             }
