@@ -28,10 +28,10 @@ const Video = () => {
             setLoading(true);
 
             try {
-                const episodeRes = await axios.get(`https://api.aninyan.com/anime/episode/${episodeId}`);
+                const episodeRes = await axios.get(`https://any.gozone.my.id/anime/episode/${episodeId}`);
                 setEpisode(episodeRes.data.data);
 
-                const animeRes = await axios.get(`https://api.aninyan.com/anime/details/${animeId}`);
+                const animeRes = await axios.get(`https://any.gozone.my.id/anime/details/${animeId}`);
                 setAnimeData(animeRes.data.data);
                 setEpisodeList(animeRes.data.episode_list);
 

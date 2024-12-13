@@ -11,7 +11,7 @@ const AnimeList = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get('https://api.aninyan.com/anime/list');
+                const res = await axios.get('https://any.gozone.my.id/anime/list');
                 console.log('Full Response:', res);
                 console.log('Response Data:', res.data);
                 setAnimeData(res.data.data);

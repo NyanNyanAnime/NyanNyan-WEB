@@ -13,7 +13,7 @@ const Schedule = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get('https://api.aninyan.com/anime/schedule');
+                const res = await axios.get('https://any.gozone.my.id/anime/schedule');
                 setAnimeData(res.data.data);
                 setFilteredData(res.data.data.find(day => day.day === selectedDay)?.anime || []);
             } catch (error) {

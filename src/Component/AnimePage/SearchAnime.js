@@ -13,7 +13,7 @@ const SearchAnime = () => {
             const fetchData = async () => {
                 setLoading(true);
                 try {
-                    const res = await axios.get(`https://api.aninyan.com/anime/search?query=${encodeURIComponent(query)}`);
+                    const res = await axios.get(`https://any.gozone.my.id/anime/search?query=${encodeURIComponent(query)}`);
                     setSearchResults(res.data.data);
                 } catch (error) {
                     console.error('Error fetching data:', error);

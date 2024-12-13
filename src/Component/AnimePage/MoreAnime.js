@@ -14,11 +14,11 @@ const MoreAnime = () => {
 
     const getApiUrl = () => {
         if (pathname.includes('/ongoing')) {
-            return `https://api.aninyan.com/anime/ongoing/${currentPage}`;
+            return `https://any.gozone.my.id/anime/ongoing/${currentPage}`;
         } else if (pathname.includes('/finished')) {
-            return `https://api.aninyan.com/anime/finished/${currentPage}`;
+            return `https://any.gozone.my.id/anime/finished/${currentPage}`;
         } else {
-            return `https://api.aninyan.com/anime/genres/${genre}/${currentPage}`;
+            return `https://any.gozone.my.id/anime/genres/${genre}/${currentPage}`;
         }
     };
 

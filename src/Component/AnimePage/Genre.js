@@ -11,7 +11,7 @@ const Genre = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://api.aninyan.com/anime/genres`);
+                const res = await axios.get(`https://any.gozone.my.id/anime/genres`);
                 setGenreData(res.data.data);
             } catch (error) {
                 console.error('Error fetching genres:', error);

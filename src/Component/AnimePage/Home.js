@@ -27,12 +27,12 @@ const Home = () => {
             setLoading(true);
             try {
                 const [ongoingRes, finishedRes, actionRes, comedyRes, romanceRes, adventureRes] = await Promise.all([
-                    axios.get('https://api.aninyan.com/anime/ongoing/1'),
-                    axios.get('https://api.aninyan.com/anime/finished/1'),
-                    axios.get('https://api.aninyan.com/anime/genres/action/1'),
-                    axios.get('https://api.aninyan.com/anime/genres/comedy/1'),
-                    axios.get('https://api.aninyan.com/anime/genres/romance/1'),
-                    axios.get('https://api.aninyan.com/anime/genres/adventure/1'),
+                    axios.get('https://any.gozone.my.id/anime/ongoing/1'),
+                    axios.get('https://any.gozone.my.id/anime/finished/1'),
+                    axios.get('https://any.gozone.my.id/anime/genres/action/1'),
+                    axios.get('https://any.gozone.my.id/anime/genres/comedy/1'),
+                    axios.get('https://any.gozone.my.id/anime/genres/romance/1'),
+                    axios.get('https://any.gozone.my.id/anime/genres/adventure/1'),
                 ]);
 
                 setOngoingData(ongoingRes.data);
@@ -45,7 +45,7 @@ const Home = () => {
                 const animeIds = ongoingRes.data.data.slice(0, 6).map(item => item.anime_id);
 
                 const detailRequests = animeIds.map(id =>
-                    axios.get(`https://api.aninyan.com/anime/details/${id}`)
+                    axios.get(`https://any.gozone.my.id/anime/details/${id}`)
                 );
 
                 const detailResponses = await Promise.all(detailRequests);
