@@ -99,7 +99,7 @@ function App() {
           }
         />
         <Route
-          path="/anime/completed"
+          path="/anime/finished"
           element={
             <>
               <Navbar />

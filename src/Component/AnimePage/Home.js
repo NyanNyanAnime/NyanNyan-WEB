@@ -258,7 +258,7 @@ const Home = () => {
                     <div className='mb-4 mx-4'>
                         <div className='flex flex-row items-center justify-between gap-10'>
                             <h3 className='font-black dark:text-white sm:text-2xl w-1/2'>Adventure Anime</h3>
-                            <Link to="/anime/finished">
+                            <Link to="/anime/genres/adventure">
                                 <button className='outline outline-3 outline-yellow-500 hover:bg-yellow-500 dark:text-white text-xs px-200 font-semibold w-32 py-2 rounded-lg shadow-md'>View More</button>
                             </Link>
                         </div>

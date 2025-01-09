@@ -62,7 +62,7 @@ const MoreAnime = () => {
         }
     };
 
-    const headerText = pathname.includes('ongoing') ? 'Ongoing Anime' : pathname.includes('finished') ? 'Completed Anime' : `${genre} Anime`;
+    const headerText = pathname.includes('ongoing') ? 'Ongoing Anime' : pathname.includes('finished') ? 'Finished Anime' : `${genre} Anime`;
 
     if (loading) {
         return <Loading />;
