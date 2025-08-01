@@ -1,5 +1,5 @@
 import React from "react";
-import nfimg from "./Image/notfound.png"
+import nfimg from "../Assets/Images/notfound.png"
 
 function NotFound() {
     return (

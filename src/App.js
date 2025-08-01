@@ -1,17 +1,17 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./Component/AnimePage/Header";
-import Footer from "./Component/AnimePage/Footer";
-import Home from "./Component/AnimePage/Home";
-import NotFound from "./Component/NotFound/NotFound";
-import Detail from "./Component/AnimePage/Detail";
-import Video from "./Component/AnimePage/Video";
-import MoreAnime from "./Component/AnimePage/MoreAnime";
-import Scroll from "./Component/AnimePage/Scroll";
-import AnimeList from "./Component/AnimePage/AnimeList";
-import SearchAnime from "./Component/AnimePage/SearchAnime";
-import Genre from "./Component/AnimePage/Genre";
-import Schedule from "./Component/AnimePage/Schedule";
+import Navbar from "./Component/Header";
+import Footer from "./Component/Footer";
+import Home from "./Pages/Home";
+import NotFound from "./Pages/NotFound";
+import Detail from "./Pages/Detail";
+import Video from "./Pages/Video";
+import MoreAnime from "./Pages/MoreAnime";
+import Scroll from "./Component/Scroll";
+import AnimeList from "./Pages/AnimeList";
+import SearchAnime from "./Component/SearchAnime";
+import Genre from "./Pages/Genre";
+import Schedule from "./Pages/Schedule";
 
 function App() {
   return (

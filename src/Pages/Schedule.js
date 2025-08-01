@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Loading from './Loading';
+import Loading from '../Component/Loading';
 import { Link } from 'react-router-dom';
 
 const Schedule = () => {
@@ -13,7 +13,7 @@ const Schedule = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get('https://any.gozone.my.id/anime/schedule');
+                const res = await axios.get('https://animanga.aninyan.com/anime/schedule');
                 setAnimeData(res.data.data);
                 setFilteredData(res.data.data.find(day => day.day === selectedDay)?.anime || []);
             } catch (error) {

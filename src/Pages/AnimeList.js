@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Loading from './Loading';
+import Loading from '../Component/Loading';
 import { Link } from 'react-router-dom';
 
 const AnimeList = () => {
@@ -11,7 +11,7 @@ const AnimeList = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get('https://any.gozone.my.id/anime/list');
+                const res = await axios.get('https://animanga.aninyan.com/anime/list');
                 console.log('Full Response:', res);
                 console.log('Response Data:', res.data);
                 setAnimeData(res.data.data);

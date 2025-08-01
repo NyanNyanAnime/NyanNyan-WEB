@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Slider from './Slider';
-import Nyan from './Image/nyan2.png';
-import Loading from './Loading';
+import Slider from '../Component/Slider';
+import Nyan from '../Assets/Images/nyan2.png';
+import Loading from '../Component/Loading';
 import { useMediaQuery } from 'react-responsive';
 
 
@@ -27,12 +27,12 @@ const Home = () => {
             setLoading(true);
             try {
                 const [ongoingRes, finishedRes, actionRes, comedyRes, romanceRes, adventureRes] = await Promise.all([
-                    axios.get('https://any.gozone.my.id/anime/ongoing/1'),
-                    axios.get('https://any.gozone.my.id/anime/finished/1'),
-                    axios.get('https://any.gozone.my.id/anime/genres/action/1'),
-                    axios.get('https://any.gozone.my.id/anime/genres/comedy/1'),
-                    axios.get('https://any.gozone.my.id/anime/genres/romance/1'),
-                    axios.get('https://any.gozone.my.id/anime/genres/adventure/1'),
+                    axios.get('https://animanga.aninyan.com/anime/ongoing/1'),
+                    axios.get('https://animanga.aninyan.com/anime/finished/1'),
+                    axios.get('https://animanga.aninyan.com/anime/genres/action/1'),
+                    axios.get('https://animanga.aninyan.com/anime/genres/comedy/1'),
+                    axios.get('https://animanga.aninyan.com/anime/genres/romance/1'),
+                    axios.get('https://animanga.aninyan.com/anime/genres/adventure/1'),
                 ]);
 
                 setOngoingData(ongoingRes.data);

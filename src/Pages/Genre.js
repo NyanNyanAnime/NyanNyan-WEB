@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Loading from './Loading';
+import Loading from '../Component/Loading';
 
 const Genre = () => {
     const [genreData, setGenreData] = useState([]);
@@ -11,7 +11,7 @@ const Genre = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://any.gozone.my.id/anime/genres`);
+                const res = await axios.get(`https://animanga.aninyan.com/anime/genres`);
                 setGenreData(res.data.data);
             } catch (error) {
                 console.error('Error fetching genres:', error);

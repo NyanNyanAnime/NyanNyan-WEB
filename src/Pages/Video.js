@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
-import Loading from './Loading';
+import Loading from '../Component/Loading';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
@@ -28,17 +28,17 @@ const Video = () => {
             setLoading(true);
 
             try {
-                const episodeRes = await axios.get(`https://any.gozone.my.id/anime/episode/${episodeId}`);
+                const episodeRes = await axios.get(`https://animanga.aninyan.com/anime/episode/${episodeId}`);
                 setEpisode(episodeRes.data.data);
 
-                const animeRes = await axios.get(`https://any.gozone.my.id/anime/details/${animeId}`);
+                const animeRes = await axios.get(`https://animanga.aninyan.com/anime/details/${animeId}`);
                 setAnimeData(animeRes.data.data);
                 setEpisodeList(animeRes.data.episode_list);
 
                 if (episodeRes) {
                     const mirrorEmbed = episodeRes.data.data.mirror_embed2;
                     if (mirrorEmbed.streaming.length > 0) {
-                        setSelectedVideo(mirrorEmbed.streaming[0].link);
+                        setSelectedVideo(mirrorEmbed.streaming[0].embed);
                     }
                 }
             } catch (err) {
@@ -70,7 +70,7 @@ const Video = () => {
                 <div className="w-full h-auto rounded-lg">
                     {selectedVideo && <VideoPlayer videoUrl={selectedVideo} />}
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 mt-5">
                     {episode?.relative?.find(item => item.title_ref === "Previous Eps.")?.link_ref && (
                         <Link
                             className="px-4 py-2 mr-2 bgColorSecond dark:bg-black dark:outline dark:outline-3 dark:outline-yellow-500 dark:text-white dark:hover:bg-yellow-500 rounded-lg"
@@ -89,11 +89,11 @@ const Video = () => {
                             {episode?.mirror_embed1?.quality || "Embed 1"}
                         </button>
                         {isDropdownOpen1 && (
-                            <div className="mt-2 text-white  bg-white dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
+                            <div className="mt-2 dark:text-white bgColorPrimary3 dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
                                 {episode?.mirror_embed1?.streaming?.map((stream, index) => (
                                     <button
                                         key={index}
-                                        onClick={() => handleVideoChange(stream.link)}
+                                        onClick={() => handleVideoChange(stream.embed)}
                                         className="block w-full px-4 py-2 text-left hover:bg-yellow-500 hover:text-white"
                                     >
                                         {stream.driver}
@@ -111,11 +111,11 @@ const Video = () => {
                             {episode?.mirror_embed2?.quality || "Embed 2"}
                         </button>
                         {isDropdownOpen2 && (
-                            <div className="mt-2 text-white bg-white dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
+                            <div className="mt-2 dark:text-white bgColorPrimary3 dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
                                 {episode?.mirror_embed2?.streaming?.map((stream, index) => (
                                     <button
                                         key={index}
-                                        onClick={() => handleVideoChange(stream.link)}
+                                        onClick={() => handleVideoChange(stream.embed)}
                                         className="block w-full px-4 py-2 text-left hover:bg-yellow-500 hover:text-white"
                                     >
                                         {stream.driver}
@@ -133,11 +133,11 @@ const Video = () => {
                             {episode?.mirror_embed3?.quality || "Embed 3"}
                         </button>
                         {isDropdownOpen3 && (
-                            <div className="mt-2 text-white bg-white dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
+                            <div className="mt-2 dark:text-white bgColorPrimary3 dark:bg-gray-900 border border-yellow-500 rounded shadow-lg absolute">
                                 {episode?.mirror_embed3?.streaming?.map((stream, index) => (
                                     <button
                                         key={index}
-                                        onClick={() => handleVideoChange(stream.link)}
+                                        onClick={() => handleVideoChange(stream.embed)}
                                         className="block w-full px-4 py-2 text-left hover:bg-yellow-500 hover:text-white"
                                     >
                                         {stream.driver}
@@ -208,7 +208,7 @@ const Video = () => {
                         {animeData.genres.map((genre, index) => (
                             <span
                                 key={index}
-                                className='my-1 px-4 py-2 text-sm font-semibold text-white border-2 border-yellow-500 rounded-full'
+                                className='my-1 px-4 py-2 text-sm font-semibold dark:text-white border-2 border-yellow-500 rounded-full'
                             >
                                 {genre}
                             </span>

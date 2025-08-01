@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import Loading from './Loading';
-import '../../App.css';
+import Loading from '../Component/Loading';
+import '../App.css';
 
 const Detail = () => {
     const { animeId } = useParams();
@@ -15,7 +15,7 @@ const Detail = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`https://any.gozone.my.id/anime/details/${animeId}`);
+                const res = await axios.get(`https://animanga.aninyan.com/anime/details/${animeId}`);
                 setAnimeData(res.data.data);
                 setEpisodeList(res.data.episode_list);
 
@@ -24,7 +24,7 @@ const Detail = () => {
                 );
 
                 if (batchEpisode) {
-                    const batchRes = await axios.get(`https://any.gozone.my.id/anime/batch/${batchEpisode.episode_id}`);
+                    const batchRes = await axios.get(`https://animanga.aninyan.com/anime/batch/${batchEpisode.episode_id}`);
                     setBatch(batchRes.data);
                 }
             } catch (error) {

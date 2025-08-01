@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams, useLocation } from 'react-router-dom';
-import Loading from './Loading';
+import Loading from '../Component/Loading';
 
 const MoreAnime = () => {
     const { genre } = useParams();
@@ -14,11 +14,11 @@ const MoreAnime = () => {
 
     const getApiUrl = () => {
         if (pathname.includes('/ongoing')) {
-            return `https://any.gozone.my.id/anime/ongoing/${currentPage}`;
+            return `https://animanga.aninyan.com/anime/ongoing/${currentPage}`;
         } else if (pathname.includes('/finished')) {
-            return `https://any.gozone.my.id/anime/finished/${currentPage}`;
+            return `https://animanga.aninyan.com/anime/finished/${currentPage}`;
         } else {
-            return `https://any.gozone.my.id/anime/genres/${genre}/${currentPage}`;
+            return `https://animanga.aninyan.com/anime/genres/${genre}/${currentPage}`;
         }
     };
 
