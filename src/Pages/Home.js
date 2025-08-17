@@ -44,8 +44,8 @@ const Home = () => {
 
                 const animeIds = ongoingRes.data.data.slice(0, 6).map(item => item.anime_id);
 
-                const detailRequests = animeIds.map(id =>
-                    axios.get(`https://any.gozone.my.id/anime/details/${id}`)
+                const detailRequests = animeIds.map((id) =>
+                  axios.get(`https://animanga.aninyan.com/anime/details/${id}`)
                 );
 
                 const detailResponses = await Promise.all(detailRequests);
